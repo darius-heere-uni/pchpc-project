@@ -1,0 +1,29 @@
+{
+  "world_size": 2,
+  "num_vectors": 5000,
+  "num_queries": 3,
+  "dimension": 2560,
+  "top_k": 10,
+  "merge_time_sec": 9.050499999996298e-05,
+  "total_time_sec": 0.006624662000000003,
+  "rank_info": [
+    {
+      "rank": 0,
+      "world_size": 2,
+      "shard_start": 0,
+      "shard_end": 2500,
+      "num_local_vectors": 2500,
+      "local_search_time_sec": 0.005562426999999981,
+      "communication_time_sec": 0.0009421490000000032
+    },
+    {
+      "rank": 1,
+      "world_size": 2,
+      "shard_start": 2500,
+      "shard_end": 5000,
+      "num_local_vectors": 2500,
+      "local_search_time_sec": 0.006212329000000016,
+      "communication_time_sec": 0.0001785949999999481
+    }
+  ]
+}

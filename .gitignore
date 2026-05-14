@@ -1,0 +1,26 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+
+
+# PyCharm / JetBrains
+.idea/
+*.iml
+
+# Generated outputs / local data
+# First slash means to only ignore the top level data folder
+# But don't ignore files like in dense_retrieval/data
+/data/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Slurm output logs
+slurm/*.out
+slurm/*.err
