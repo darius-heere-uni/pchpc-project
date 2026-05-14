@@ -26,15 +26,20 @@ echo "Checking PROJECT_DIR:"
 echo "PROJECT_DIR=$PROJECT_DIR"
 
 echo
+echo "Loading required modules."
+
+module purge
+module load gcc/14.2.0
+module load openmpi/4.1.7
+module load miniforge3
+
+echo
+echo "Loaded modules:"
+module list
+
+echo
 echo "Activating conda environment."
-if command -v conda >/dev/null 2>&1; then
-    source "$(conda info --base)/etc/profile.d/conda.sh"
-    conda activate mpi_course
-else
-    echo "ERROR: conda command not found."
-    echo "You may need to load the cluster's conda/miniforge module before activating mpi_course."
-    exit 1
-fi
+source activate mpi_course
 
 echo
 echo "Python executable:"
@@ -42,8 +47,17 @@ which python
 python --version
 
 echo
+echo "MPI executables:"
+which mpirun || true
+which mpiexec || true
+
+echo
+echo "Conda MPI-related packages:"
+conda list | grep -E 'mpi|openmpi|mpich|mpi4py' || true
+
+echo
 echo "Testing mpi4py import under srun:"
-srun python -c 'from mpi4py import MPI; import socket; comm = MPI.COMM_WORLD; print(f"rank {comm.Get_rank()} / {comm.Get_size()} on {socket.gethostname()}")'
+srun python -c 'from mpi4py import MPI; import socket, sys; comm = MPI.COMM_WORLD; print(f"rank {comm.Get_rank()} / {comm.Get_size()} on {socket.gethostname()} using {sys.executable}", flush=True)'
 
 echo
 echo "Resolving dataset directory from configs/cluster.json:"
