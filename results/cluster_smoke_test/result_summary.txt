@@ -1,19 +1,17 @@
 Retrieval finished.
 
 Run summary:
-  MPI ranks:      4
+  MPI ranks:      2
   Vectors:        5000
   Queries:        3
   Dimension:      2560
   Top-k:          10
-  Total time:     0.004990 s
-  Merge time:     0.000116 s
+  Total time:     0.006625 s
+  Merge time:     0.000091 s
 
 Shard distribution:
-  Rank  0: [0, 1250) (1250 vectors), search=0.004617s, comm=0.000226s
-  Rank  1: [1250, 2500) (1250 vectors), search=0.004576s, comm=0.000155s
-  Rank  2: [2500, 3750) (1250 vectors), search=0.004575s, comm=0.000234s
-  Rank  3: [3750, 5000) (1250 vectors), search=0.004573s, comm=0.000155s
+  Rank  0: [0, 2500) (2500 vectors), search=0.005562s, comm=0.000942s
+  Rank  1: [2500, 5000) (2500 vectors), search=0.006212s, comm=0.000179s
 
 Top-k preview for first query:
    1. vector_id=    4070, score=186.855499
