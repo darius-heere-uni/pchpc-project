@@ -17,3 +17,10 @@ mpiexec -n 1 python run_retrieval.py --config configs/local.json
 ```bash
 mpiexec -n 4 python check_correctness.py --config configs/local.json
 ```
+
+
+### Schedule a Slurm Batch Job via the respective Config File
+
+```bash
+sbatch slurm/smoke_test.sbatch
+```
