@@ -10,7 +10,9 @@
 *.iml
 
 # Generated outputs / local data
-data/
+# First slash means to only ignore the top level data folder
+# But don't ignore files like in dense_retrieval/data
+/data/
 
 # Python
 __pycache__/
