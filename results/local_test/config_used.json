@@ -3,12 +3,10 @@
     "name": "pchpc-project",
     "run_id": "local_test"
   },
-
   "paths": {
     "data_root": "data",
     "results_root": "results"
   },
-
   "dataset": {
     "name": "small_random_2560d",
     "num_vectors": 5000,
@@ -18,13 +16,11 @@
     "seed": 42,
     "normalize": false
   },
-
   "search": {
     "backend": "numpy",
     "top_k": 10,
     "similarity": "dot"
   },
-
   "retrieval": {
     "mode": "mpi_centralized"
   }
