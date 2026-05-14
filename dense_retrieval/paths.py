@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from typing import Any
 
@@ -22,10 +23,19 @@ def resolve_project_path(path_value: str | Path) -> Path:
     """
     Resolve a path from the config.
 
+    Supported forms:
+        data
+        ./data
+        ~/some/path
+        $PROJECT_DIR/some/path
+        ${PROJECT_DIR}/some/path
+        /absolute/path
+
     Absolute paths stay unchanged.
     Relative paths are interpreted relative to the project root.
     """
-    path = Path(path_value).expanduser()
+    expanded = os.path.expandvars(str(path_value))
+    path = Path(expanded).expanduser()
 
     if path.is_absolute():
         return path
