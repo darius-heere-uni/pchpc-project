@@ -30,6 +30,8 @@ def run_selected_retrieval(
     top_k: int,
     comm: MPI.Comm,
     load_time_sec: float,
+    search_backend: str,
+    faiss_num_threads: int | None,
 ):
     if mode == "mpi_centralized":
         return run_mpi_centralized_retrieval(
@@ -38,6 +40,8 @@ def run_selected_retrieval(
             top_k=top_k,
             comm=comm,
             load_time_sec=load_time_sec,
+            search_backend=search_backend,
+            faiss_num_threads=faiss_num_threads,
         )
 
     if mode == "mpi_tree":
@@ -47,6 +51,8 @@ def run_selected_retrieval(
             top_k=top_k,
             comm=comm,
             load_time_sec=load_time_sec,
+            search_backend=search_backend,
+            faiss_num_threads=faiss_num_threads,
         )
 
     raise ValueError(f"Unknown retrieval mode: {mode}")
@@ -77,11 +83,14 @@ def main() -> None:
     search_cfg = config["search"]
     retrieval_cfg = config["retrieval"]
 
-    if search_cfg["backend"] != "numpy":
+    similarity = search_cfg.get("similarity", "dot")
+    if similarity != "dot":
         raise ValueError(
-            f"Only the numpy backend is implemented for now, "
-            f"got: {search_cfg['backend']}"
+            f"Only similarity='dot' is implemented for now, got: {similarity}"
         )
+
+    search_backend = search_cfg["backend"]
+    faiss_num_threads = search_cfg.get("faiss_num_threads")
 
     result = run_selected_retrieval(
         mode=retrieval_cfg["mode"],
@@ -90,6 +99,8 @@ def main() -> None:
         top_k=search_cfg["top_k"],
         comm=comm,
         load_time_sec=load_time_sec,
+        search_backend=search_backend,
+        faiss_num_threads=faiss_num_threads,
     )
 
     if rank == 0:

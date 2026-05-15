@@ -5,7 +5,7 @@ from mpi4py import MPI
 
 from dense_retrieval.data.sharding import get_shard_bounds
 from dense_retrieval.merge import merge_topk
-from dense_retrieval.search.numpy_flat import search_topk_numpy
+from dense_retrieval.search.backends import search_topk
 
 
 def run_mpi_centralized_retrieval(
@@ -14,25 +14,14 @@ def run_mpi_centralized_retrieval(
     top_k: int,
     comm: MPI.Comm,
     load_time_sec: float | None = None,
+    search_backend: str = "numpy",
+    faiss_num_threads: int | None = None,
 ) -> dict[str, Any] | None:
     """
     MPI retrieval with centralized merging on rank 0.
 
     Each rank searches its local shard.
     Rank 0 gathers all local top-k results and merges them.
-
-    Timing convention:
-        load_time_sec:
-            Measured outside this function, because loading happens before
-            retrieval starts.
-
-        mpi_total_time_sec:
-            Time after all ranks have loaded the dataset and synchronized,
-            including local search, gather communication, and rank-0 merge.
-
-        total_time_sec:
-            Approximate end-to-end time, computed on rank 0 as
-            max(load_time_sec over ranks) + mpi_total_time_sec.
     """
     rank = comm.Get_rank()
     world_size = comm.Get_size()
@@ -46,21 +35,21 @@ def run_mpi_centralized_retrieval(
 
     local_vectors = vectors[start_idx:end_idx]
 
-    # Make the retrieval timing start after all ranks have loaded the data.
     comm.Barrier()
     mpi_total_start = MPI.Wtime()
 
     search_start = MPI.Wtime()
 
-    local_scores, local_indices = search_topk_numpy(
+    local_scores, local_indices = search_topk(
         vectors=local_vectors,
         queries=queries,
         top_k=top_k,
+        backend=search_backend,
+        faiss_num_threads=faiss_num_threads,
     )
 
     search_end = MPI.Wtime()
 
-    # Convert local shard indices to global vector indices.
     local_indices = local_indices + start_idx
 
     communication_start = MPI.Wtime()
@@ -117,6 +106,8 @@ def run_mpi_centralized_retrieval(
             "indices": global_indices,
             "metrics": {
                 "retrieval_mode": "mpi_centralized",
+                "search_backend": search_backend,
+                "faiss_num_threads": faiss_num_threads,
                 "world_size": world_size,
                 "num_vectors": num_vectors,
                 "num_queries": queries.shape[0],

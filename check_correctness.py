@@ -41,6 +41,8 @@ def run_selected_retrieval(
     queries,
     top_k: int,
     comm: MPI.Comm,
+    search_backend: str,
+    faiss_num_threads: int | None,
 ):
     if mode == "mpi_centralized":
         return run_mpi_centralized_retrieval(
@@ -48,6 +50,8 @@ def run_selected_retrieval(
             queries=queries,
             top_k=top_k,
             comm=comm,
+            search_backend=search_backend,
+            faiss_num_threads=faiss_num_threads,
         )
 
     if mode == "mpi_tree":
@@ -56,6 +60,8 @@ def run_selected_retrieval(
             queries=queries,
             top_k=top_k,
             comm=comm,
+            search_backend=search_backend,
+            faiss_num_threads=faiss_num_threads,
         )
 
     raise ValueError(f"Unknown retrieval mode: {mode}")
@@ -69,9 +75,6 @@ def print_first_mismatch(
     rtol: float,
     atol: float,
 ) -> None:
-    """
-    Print a small diagnostic for the first query where results differ.
-    """
     num_queries = seq_indices.shape[0]
 
     for query_id in range(num_queries):
@@ -112,18 +115,24 @@ def main() -> None:
     search_cfg = config["search"]
     retrieval_cfg = config["retrieval"]
 
+    similarity = search_cfg.get("similarity", "dot")
+    if similarity != "dot":
+        raise ValueError(
+            f"Only similarity='dot' is implemented for now, got: {similarity}"
+        )
+
+    search_backend = search_cfg["backend"]
+    faiss_num_threads = search_cfg.get("faiss_num_threads")
+
     if rank == 0:
         print(f"Checking correctness with {world_size} MPI rank(s).")
         print(f"Retrieval mode: {retrieval_cfg['mode']}")
+        print(f"Search backend: {search_backend}")
+        if search_backend == "faiss":
+            print(f"FAISS threads per rank: {faiss_num_threads}")
         print(f"Loading dataset from: {dataset_dir}")
 
     vectors, queries, _metadata = load_dataset(dataset_dir)
-
-    if search_cfg["backend"] != "numpy":
-        raise ValueError(
-            f"Correctness check currently supports only backend='numpy', "
-            f"got: {search_cfg['backend']}"
-        )
 
     top_k = search_cfg["top_k"]
 
@@ -133,10 +142,12 @@ def main() -> None:
         queries=queries,
         top_k=top_k,
         comm=comm,
+        search_backend=search_backend,
+        faiss_num_threads=faiss_num_threads,
     )
 
     if rank == 0:
-        print("Running sequential baseline on rank 0.")
+        print("Running sequential NumPy baseline on rank 0.")
 
         seq_scores, seq_indices = run_sequential_retrieval(
             vectors=vectors,

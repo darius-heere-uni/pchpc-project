@@ -1,0 +1,36 @@
+Retrieval finished.
+
+Run summary:
+  Retrieval mode:        mpi_tree
+  Search backend:        faiss
+  FAISS threads/rank:    1
+  MPI ranks:             4
+  Vectors:               5000
+  Queries:               3
+  Dimension:             2560
+  Top-k:                 10
+
+Timing summary:
+  Load time max:         0.035224 s
+  Load time mean:        0.035215 s
+  MPI retrieval time:    0.045181 s
+  Merge time:            0.000320 s
+  Total time approx.:    0.080405 s
+
+Shard distribution:
+  Rank  0: [0, 1250) (1250 vectors), load=0.035201 s, search=0.044797s, comm=0.000115s, local_merge=0.000201s
+  Rank  1: [1250, 2500) (1250 vectors), load=0.035224 s, search=0.044626s, comm=0.000185s, local_merge=0.000000s
+  Rank  2: [2500, 3750) (1250 vectors), load=0.035213 s, search=0.044652s, comm=0.000190s, local_merge=0.000177s
+  Rank  3: [3750, 5000) (1250 vectors), load=0.035224 s, search=0.044551s, comm=0.000121s, local_merge=0.000000s
+
+Top-k preview for first query:
+   1. vector_id=    4070, score=186.855438
+   2. vector_id=    2498, score=170.519379
+   3. vector_id=    2510, score=163.982483
+   4. vector_id=     266, score=151.866531
+   5. vector_id=     662, score=151.787521
+   6. vector_id=     883, score=149.307220
+   7. vector_id=    2606, score=144.920639
+   8. vector_id=    1885, score=144.673782
+   9. vector_id=    2144, score=141.039459
+  10. vector_id=    3556, score=140.456406

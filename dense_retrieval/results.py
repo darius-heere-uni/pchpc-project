@@ -115,6 +115,12 @@ def format_result_summary(result: dict[str, Any]) -> str:
     if "retrieval_mode" in metrics:
         lines.append(f"  Retrieval mode:        {metrics['retrieval_mode']}")
 
+    if "search_backend" in metrics:
+        lines.append(f"  Search backend:        {metrics['search_backend']}")
+
+    if metrics.get("search_backend") == "faiss":
+        lines.append(f"  FAISS threads/rank:    {metrics.get('faiss_num_threads')}")
+
     lines.append(f"  MPI ranks:             {metrics['world_size']}")
     lines.append(f"  Vectors:               {metrics['num_vectors']}")
     lines.append(f"  Queries:               {metrics['num_queries']}")

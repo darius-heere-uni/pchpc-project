@@ -5,7 +5,7 @@ from mpi4py import MPI
 
 from dense_retrieval.data.sharding import get_shard_bounds
 from dense_retrieval.merge import merge_topk
-from dense_retrieval.search.numpy_flat import search_topk_numpy
+from dense_retrieval.search.backends import search_topk
 
 
 def run_mpi_tree_retrieval(
@@ -14,23 +14,14 @@ def run_mpi_tree_retrieval(
     top_k: int,
     comm: MPI.Comm,
     load_time_sec: float | None = None,
+    search_backend: str = "numpy",
+    faiss_num_threads: int | None = None,
 ) -> dict[str, Any] | None:
     """
     MPI retrieval with tree-based merging.
 
     Each rank searches its local shard.
-    Instead of gathering all local top-k lists directly at rank 0, ranks merge
-    pairwise in a tree pattern until rank 0 holds the global top-k result.
-
-    Example with 4 ranks:
-        step 1:
-            rank 1 -> rank 0
-            rank 3 -> rank 2
-
-        step 2:
-            rank 2 -> rank 0
-
-        rank 0 now has the global top-k.
+    Ranks then merge pairwise in a tree pattern until rank 0 holds the global top-k.
     """
     rank = comm.Get_rank()
     world_size = comm.Get_size()
@@ -49,15 +40,16 @@ def run_mpi_tree_retrieval(
 
     search_start = MPI.Wtime()
 
-    local_scores, local_indices = search_topk_numpy(
+    local_scores, local_indices = search_topk(
         vectors=local_vectors,
         queries=queries,
         top_k=top_k,
+        backend=search_backend,
+        faiss_num_threads=faiss_num_threads,
     )
 
     search_end = MPI.Wtime()
 
-    # Convert local shard indices to global vector IDs.
     current_scores = local_scores
     current_indices = local_indices + start_idx
 
@@ -72,7 +64,6 @@ def run_mpi_tree_retrieval(
     while step < world_size:
         if active:
             if rank % (2 * step) == 0:
-                # Receiver rank in this tree step.
                 partner = rank + step
 
                 if partner < world_size:
@@ -104,7 +95,6 @@ def run_mpi_tree_retrieval(
                     local_merge_time_sec += merge_end - merge_start
 
             else:
-                # Sender rank in this tree step.
                 target = rank - step
 
                 communication_start = MPI.Wtime()
@@ -123,8 +113,6 @@ def run_mpi_tree_retrieval(
                 communication_end = MPI.Wtime()
                 tree_communication_time_sec += communication_end - communication_start
 
-                # This rank has sent its current result and is no longer active
-                # in later tree steps.
                 active = False
 
         step *= 2
@@ -170,6 +158,8 @@ def run_mpi_tree_retrieval(
             "indices": current_indices,
             "metrics": {
                 "retrieval_mode": "mpi_tree",
+                "search_backend": search_backend,
+                "faiss_num_threads": faiss_num_threads,
                 "world_size": world_size,
                 "num_vectors": num_vectors,
                 "num_queries": queries.shape[0],
