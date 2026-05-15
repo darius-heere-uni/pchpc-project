@@ -7,6 +7,7 @@ from dense_retrieval.config import load_config
 from dense_retrieval.data.storage import load_dataset
 from dense_retrieval.paths import get_dataset_dir
 from dense_retrieval.retrieval.mpi_centralized import run_mpi_centralized_retrieval
+from dense_retrieval.retrieval.mpi_tree import run_mpi_tree_retrieval
 from dense_retrieval.retrieval.sequential import run_sequential_retrieval
 
 
@@ -34,11 +35,39 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def run_selected_retrieval(
+    mode: str,
+    vectors,
+    queries,
+    top_k: int,
+    comm: MPI.Comm,
+):
+    if mode == "mpi_centralized":
+        return run_mpi_centralized_retrieval(
+            vectors=vectors,
+            queries=queries,
+            top_k=top_k,
+            comm=comm,
+        )
+
+    if mode == "mpi_tree":
+        return run_mpi_tree_retrieval(
+            vectors=vectors,
+            queries=queries,
+            top_k=top_k,
+            comm=comm,
+        )
+
+    raise ValueError(f"Unknown retrieval mode: {mode}")
+
+
 def print_first_mismatch(
     mpi_indices: np.ndarray,
     seq_indices: np.ndarray,
     mpi_scores: np.ndarray,
     seq_scores: np.ndarray,
+    rtol: float,
+    atol: float,
 ) -> None:
     """
     Print a small diagnostic for the first query where results differ.
@@ -50,8 +79,8 @@ def print_first_mismatch(
         scores_match = np.allclose(
             mpi_scores[query_id],
             seq_scores[query_id],
-            rtol=1e-5,
-            atol=1e-5,
+            rtol=rtol,
+            atol=atol,
         )
 
         if not indices_match or not scores_match:
@@ -80,14 +109,15 @@ def main() -> None:
     config = load_config(args.config)
     dataset_dir = get_dataset_dir(config)
 
+    search_cfg = config["search"]
+    retrieval_cfg = config["retrieval"]
+
     if rank == 0:
         print(f"Checking correctness with {world_size} MPI rank(s).")
+        print(f"Retrieval mode: {retrieval_cfg['mode']}")
         print(f"Loading dataset from: {dataset_dir}")
 
     vectors, queries, _metadata = load_dataset(dataset_dir)
-
-    search_cfg = config["search"]
-    retrieval_cfg = config["retrieval"]
 
     if search_cfg["backend"] != "numpy":
         raise ValueError(
@@ -95,15 +125,10 @@ def main() -> None:
             f"got: {search_cfg['backend']}"
         )
 
-    if retrieval_cfg["mode"] != "mpi_centralized":
-        raise ValueError(
-            f"Correctness check currently supports only mode='mpi_centralized', "
-            f"got: {retrieval_cfg['mode']}"
-        )
-
     top_k = search_cfg["top_k"]
 
-    mpi_result = run_mpi_centralized_retrieval(
+    mpi_result = run_selected_retrieval(
+        mode=retrieval_cfg["mode"],
         vectors=vectors,
         queries=queries,
         top_k=top_k,
@@ -152,6 +177,8 @@ def main() -> None:
                 seq_indices=seq_indices,
                 mpi_scores=mpi_scores,
                 seq_scores=seq_scores,
+                rtol=args.rtol,
+                atol=args.atol,
             )
             raise SystemExit(1)
 

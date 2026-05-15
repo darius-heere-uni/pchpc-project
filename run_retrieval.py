@@ -8,6 +8,7 @@ from dense_retrieval.data.storage import load_dataset
 from dense_retrieval.paths import get_dataset_dir
 from dense_retrieval.results import format_result_summary, save_run_outputs
 from dense_retrieval.retrieval.mpi_centralized import run_mpi_centralized_retrieval
+from dense_retrieval.retrieval.mpi_tree import run_mpi_tree_retrieval
 
 
 def parse_args() -> argparse.Namespace:
@@ -20,6 +21,35 @@ def parse_args() -> argparse.Namespace:
         help="Path to the JSON config file, e.g. configs/local.json",
     )
     return parser.parse_args()
+
+
+def run_selected_retrieval(
+    mode: str,
+    vectors,
+    queries,
+    top_k: int,
+    comm: MPI.Comm,
+    load_time_sec: float,
+):
+    if mode == "mpi_centralized":
+        return run_mpi_centralized_retrieval(
+            vectors=vectors,
+            queries=queries,
+            top_k=top_k,
+            comm=comm,
+            load_time_sec=load_time_sec,
+        )
+
+    if mode == "mpi_tree":
+        return run_mpi_tree_retrieval(
+            vectors=vectors,
+            queries=queries,
+            top_k=top_k,
+            comm=comm,
+            load_time_sec=load_time_sec,
+        )
+
+    raise ValueError(f"Unknown retrieval mode: {mode}")
 
 
 def main() -> None:
@@ -53,13 +83,8 @@ def main() -> None:
             f"got: {search_cfg['backend']}"
         )
 
-    if retrieval_cfg["mode"] != "mpi_centralized":
-        raise ValueError(
-            f"Only mpi_centralized mode is implemented for now, "
-            f"got: {retrieval_cfg['mode']}"
-        )
-
-    result = run_mpi_centralized_retrieval(
+    result = run_selected_retrieval(
+        mode=retrieval_cfg["mode"],
         vectors=vectors,
         queries=queries,
         top_k=search_cfg["top_k"],

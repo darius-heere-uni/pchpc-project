@@ -116,6 +116,7 @@ def run_mpi_centralized_retrieval(
             "scores": global_scores,
             "indices": global_indices,
             "metrics": {
+                "retrieval_mode": "mpi_centralized",
                 "world_size": world_size,
                 "num_vectors": num_vectors,
                 "num_queries": queries.shape[0],

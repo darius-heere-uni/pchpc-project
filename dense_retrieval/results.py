@@ -111,6 +111,10 @@ def format_result_summary(result: dict[str, Any]) -> str:
     lines.append("Retrieval finished.")
     lines.append("")
     lines.append("Run summary:")
+
+    if "retrieval_mode" in metrics:
+        lines.append(f"  Retrieval mode:        {metrics['retrieval_mode']}")
+
     lines.append(f"  MPI ranks:             {metrics['world_size']}")
     lines.append(f"  Vectors:               {metrics['num_vectors']}")
     lines.append(f"  Queries:               {metrics['num_queries']}")
@@ -144,7 +148,7 @@ def format_result_summary(result: dict[str, Any]) -> str:
     lines.append("Shard distribution:")
 
     for info in metrics["rank_info"]:
-        lines.append(
+        line = (
             f"  Rank {info['rank']:>2}: "
             f"[{info['shard_start']}, {info['shard_end']}) "
             f"({info['num_local_vectors']} vectors), "
@@ -152,6 +156,11 @@ def format_result_summary(result: dict[str, Any]) -> str:
             f"search={info['local_search_time_sec']:.6f}s, "
             f"comm={info['communication_time_sec']:.6f}s"
         )
+
+        if "local_merge_time_sec" in info:
+            line += f", local_merge={info['local_merge_time_sec']:.6f}s"
+
+        lines.append(line)
 
     lines.append("")
     lines.append("Top-k preview for first query:")
