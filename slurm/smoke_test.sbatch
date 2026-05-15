@@ -27,10 +27,7 @@ echo "PROJECT_DIR=$PROJECT_DIR"
 
 echo
 echo "Loading required modules."
-
 module purge
-module load gcc/14.2.0
-module load openmpi/4.1.7
 module load miniforge3
 
 echo
@@ -47,13 +44,17 @@ which python
 python --version
 
 echo
-echo "MPI executables:"
+echo "MPI executables from active environment:"
 which mpirun || true
 which mpiexec || true
 
 echo
 echo "Conda MPI-related packages:"
 conda list | grep -E 'mpi|openmpi|mpich|mpi4py' || true
+
+echo
+echo "Python package check:"
+python -c 'import numpy; import faiss; from mpi4py import MPI; print("environment OK"); print(MPI.Get_library_version())'
 
 echo
 echo "Testing mpi4py import under srun:"
