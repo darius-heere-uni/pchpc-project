@@ -4,8 +4,11 @@
   "num_queries": 3,
   "dimension": 2560,
   "top_k": 10,
-  "merge_time_sec": 0.00010451499999986069,
-  "total_time_sec": 0.004242500000000149,
+  "load_time_sec_max": 0.11237553100000008,
+  "load_time_sec_mean": 0.11058486625000002,
+  "mpi_total_time_sec": 0.00641739100000005,
+  "merge_time_sec": 0.00011509700000011946,
+  "total_time_sec": 0.11879292200000013,
   "rank_info": [
     {
       "rank": 0,
@@ -13,8 +16,9 @@
       "shard_start": 0,
       "shard_end": 1250,
       "num_local_vectors": 1250,
-      "local_search_time_sec": 0.003908094999999889,
-      "communication_time_sec": 0.00019855099999999126
+      "load_time_sec": 0.11237553100000008,
+      "local_search_time_sec": 0.005450834999999987,
+      "communication_time_sec": 0.0008197189999998855
     },
     {
       "rank": 1,
@@ -22,8 +26,9 @@
       "shard_start": 1250,
       "shard_end": 2500,
       "num_local_vectors": 1250,
-      "local_search_time_sec": 0.0038655359999999472,
-      "communication_time_sec": 0.00013567400000003005
+      "load_time_sec": 0.10998723999999993,
+      "local_search_time_sec": 0.005467077000000042,
+      "communication_time_sec": 0.0003552609999999401
     },
     {
       "rank": 2,
@@ -31,8 +36,9 @@
       "shard_start": 2500,
       "shard_end": 3750,
       "num_local_vectors": 1250,
-      "local_search_time_sec": 0.003866087000000018,
-      "communication_time_sec": 0.00013718699999998307
+      "load_time_sec": 0.109988733,
+      "local_search_time_sec": 0.005437190000000092,
+      "communication_time_sec": 0.00038406600000007174
     },
     {
       "rank": 3,
@@ -40,8 +46,9 @@
       "shard_start": 3750,
       "shard_end": 5000,
       "num_local_vectors": 1250,
-      "local_search_time_sec": 0.0038631309999999086,
-      "communication_time_sec": 0.00013649500000001424
+      "load_time_sec": 0.10998796100000008,
+      "local_search_time_sec": 0.005436548000000041,
+      "communication_time_sec": 0.00038109000000008386
     }
   ]
 }

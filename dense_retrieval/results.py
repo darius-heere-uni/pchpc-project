@@ -92,6 +92,12 @@ def build_topk_preview(
     }
 
 
+def _format_optional_seconds(value: float | None) -> str:
+    if value is None:
+        return "n/a"
+    return f"{value:.6f} s"
+
+
 def format_result_summary(result: dict[str, Any]) -> str:
     """
     Create a human-readable text summary of one retrieval run.
@@ -105,13 +111,34 @@ def format_result_summary(result: dict[str, Any]) -> str:
     lines.append("Retrieval finished.")
     lines.append("")
     lines.append("Run summary:")
-    lines.append(f"  MPI ranks:      {metrics['world_size']}")
-    lines.append(f"  Vectors:        {metrics['num_vectors']}")
-    lines.append(f"  Queries:        {metrics['num_queries']}")
-    lines.append(f"  Dimension:      {metrics['dimension']}")
-    lines.append(f"  Top-k:          {metrics['top_k']}")
-    lines.append(f"  Total time:     {metrics['total_time_sec']:.6f} s")
-    lines.append(f"  Merge time:     {metrics['merge_time_sec']:.6f} s")
+    lines.append(f"  MPI ranks:             {metrics['world_size']}")
+    lines.append(f"  Vectors:               {metrics['num_vectors']}")
+    lines.append(f"  Queries:               {metrics['num_queries']}")
+    lines.append(f"  Dimension:             {metrics['dimension']}")
+    lines.append(f"  Top-k:                 {metrics['top_k']}")
+
+    lines.append("")
+    lines.append("Timing summary:")
+    lines.append(
+        f"  Load time max:         "
+        f"{_format_optional_seconds(metrics.get('load_time_sec_max'))}"
+    )
+    lines.append(
+        f"  Load time mean:        "
+        f"{_format_optional_seconds(metrics.get('load_time_sec_mean'))}"
+    )
+    lines.append(
+        f"  MPI retrieval time:    "
+        f"{_format_optional_seconds(metrics.get('mpi_total_time_sec'))}"
+    )
+    lines.append(
+        f"  Merge time:            "
+        f"{_format_optional_seconds(metrics.get('merge_time_sec'))}"
+    )
+    lines.append(
+        f"  Total time approx.:    "
+        f"{_format_optional_seconds(metrics.get('total_time_sec'))}"
+    )
 
     lines.append("")
     lines.append("Shard distribution:")
@@ -121,6 +148,7 @@ def format_result_summary(result: dict[str, Any]) -> str:
             f"  Rank {info['rank']:>2}: "
             f"[{info['shard_start']}, {info['shard_end']}) "
             f"({info['num_local_vectors']} vectors), "
+            f"load={_format_optional_seconds(info.get('load_time_sec'))}, "
             f"search={info['local_search_time_sec']:.6f}s, "
             f"comm={info['communication_time_sec']:.6f}s"
         )

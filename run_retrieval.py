@@ -34,7 +34,10 @@ def main() -> None:
     if rank == 0:
         print(f"Loading dataset from: {dataset_dir}")
 
+    load_start = MPI.Wtime()
     vectors, queries, metadata = load_dataset(dataset_dir)
+    load_end = MPI.Wtime()
+    load_time_sec = load_end - load_start
 
     if rank == 0:
         print("Dataset loaded.")
@@ -61,6 +64,7 @@ def main() -> None:
         queries=queries,
         top_k=search_cfg["top_k"],
         comm=comm,
+        load_time_sec=load_time_sec,
     )
 
     if rank == 0:

@@ -13,12 +13,26 @@ def run_mpi_centralized_retrieval(
     queries: np.ndarray,
     top_k: int,
     comm: MPI.Comm,
+    load_time_sec: float | None = None,
 ) -> dict[str, Any] | None:
     """
     MPI retrieval with centralized merging on rank 0.
 
     Each rank searches its local shard.
     Rank 0 gathers all local top-k results and merges them.
+
+    Timing convention:
+        load_time_sec:
+            Measured outside this function, because loading happens before
+            retrieval starts.
+
+        mpi_total_time_sec:
+            Time after all ranks have loaded the dataset and synchronized,
+            including local search, gather communication, and rank-0 merge.
+
+        total_time_sec:
+            Approximate end-to-end time, computed on rank 0 as
+            max(load_time_sec over ranks) + mpi_total_time_sec.
     """
     rank = comm.Get_rank()
     world_size = comm.Get_size()
@@ -32,8 +46,9 @@ def run_mpi_centralized_retrieval(
 
     local_vectors = vectors[start_idx:end_idx]
 
+    # Make the retrieval timing start after all ranks have loaded the data.
     comm.Barrier()
-    total_start = MPI.Wtime()
+    mpi_total_start = MPI.Wtime()
 
     search_start = MPI.Wtime()
 
@@ -61,6 +76,7 @@ def run_mpi_centralized_retrieval(
         "shard_start": start_idx,
         "shard_end": end_idx,
         "num_local_vectors": end_idx - start_idx,
+        "load_time_sec": load_time_sec,
         "local_search_time_sec": search_end - search_start,
         "communication_time_sec": communication_end - communication_start,
     }
@@ -77,8 +93,24 @@ def run_mpi_centralized_retrieval(
         )
 
         merge_end = MPI.Wtime()
+        mpi_total_end = MPI.Wtime()
 
-        total_end = MPI.Wtime()
+        mpi_total_time_sec = mpi_total_end - mpi_total_start
+
+        load_times = [
+            info["load_time_sec"]
+            for info in gathered_rank_info
+            if info["load_time_sec"] is not None
+        ]
+
+        if load_times:
+            load_time_sec_max = max(load_times)
+            load_time_sec_mean = sum(load_times) / len(load_times)
+            total_time_sec = load_time_sec_max + mpi_total_time_sec
+        else:
+            load_time_sec_max = None
+            load_time_sec_mean = None
+            total_time_sec = mpi_total_time_sec
 
         return {
             "scores": global_scores,
@@ -89,8 +121,11 @@ def run_mpi_centralized_retrieval(
                 "num_queries": queries.shape[0],
                 "dimension": vectors.shape[1],
                 "top_k": top_k,
+                "load_time_sec_max": load_time_sec_max,
+                "load_time_sec_mean": load_time_sec_mean,
+                "mpi_total_time_sec": mpi_total_time_sec,
                 "merge_time_sec": merge_end - merge_start,
-                "total_time_sec": total_end - total_start,
+                "total_time_sec": total_time_sec,
                 "rank_info": gathered_rank_info,
             },
         }
