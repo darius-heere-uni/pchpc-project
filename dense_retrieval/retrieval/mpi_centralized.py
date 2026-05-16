@@ -5,7 +5,7 @@ from mpi4py import MPI
 
 from dense_retrieval.merge import merge_topk
 from dense_retrieval.search.backends import search_topk
-
+from dense_retrieval.search.local_index import LocalSearchIndex
 
 def run_mpi_centralized_retrieval(
     local_vectors: np.ndarray,
@@ -17,6 +17,7 @@ def run_mpi_centralized_retrieval(
     load_time_sec: float | None = None,
     search_backend: str = "numpy",
     faiss_num_threads: int | None = None,
+    search_index: LocalSearchIndex | None = None,
 ) -> dict[str, Any] | None:
     """
     MPI retrieval with centralized merging on rank 0.
@@ -35,13 +36,19 @@ def run_mpi_centralized_retrieval(
 
     search_start = MPI.Wtime()
 
-    local_scores, local_indices = search_topk(
-        vectors=local_vectors,
-        queries=queries,
-        top_k=top_k,
-        backend=search_backend,
-        faiss_num_threads=faiss_num_threads,
-    )
+    if search_index is not None:
+        local_scores, local_indices = search_index.search(
+            queries=queries,
+            top_k=top_k,
+        )
+    else:
+        local_scores, local_indices = search_topk(
+            vectors=local_vectors,
+            queries=queries,
+            top_k=top_k,
+            backend=search_backend,
+            faiss_num_threads=faiss_num_threads,
+        )
 
     search_end = MPI.Wtime()
 
@@ -104,6 +111,7 @@ def run_mpi_centralized_retrieval(
                 "retrieval_mode": "mpi_centralized",
                 "search_backend": search_backend,
                 "faiss_num_threads": faiss_num_threads,
+                "search_index_reuse": search_index is not None,
                 "loading_strategy": "shard_aware_shared_npy",
                 "vector_storage": "single_vectors_npy",
                 "query_loading": "full_queries_on_each_rank",
