@@ -57,8 +57,8 @@ echo "Python package check:"
 python -c 'import numpy; import faiss; from mpi4py import MPI; print("environment OK"); print(MPI.Get_library_version())'
 
 echo
-echo "Testing mpi4py import under srun:"
-srun python -c 'from mpi4py import MPI; import socket, sys; comm = MPI.COMM_WORLD; print(f"rank {comm.Get_rank()} / {comm.Get_size()} on {socket.gethostname()} using {sys.executable}", flush=True)'
+echo "Testing mpi4py import under mpiexec:"
+mpiexec -n "$SLURM_NTASKS" python -c 'from mpi4py import MPI; import socket, sys; comm = MPI.COMM_WORLD; print(f"rank {comm.Get_rank()} / {comm.Get_size()} on {socket.gethostname()} using {sys.executable}", flush=True)'
 
 echo
 echo "Resolving dataset directory from configs/cluster.json:"
@@ -83,11 +83,11 @@ fi
 
 echo
 echo "Running correctness check."
-srun python check_correctness.py --config configs/cluster.json
+mpiexec -n "$SLURM_NTASKS" python check_correctness.py --config configs/cluster.json
 
 echo
 echo "Running retrieval."
-srun python run_retrieval.py --config configs/cluster.json
+mpiexec -n "$SLURM_NTASKS" python run_retrieval.py --config configs/cluster.json
 
 echo
 echo "Job finished on: $(date)"

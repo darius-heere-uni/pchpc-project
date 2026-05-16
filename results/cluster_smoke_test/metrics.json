@@ -1,11 +1,20 @@
 {
+  "retrieval_mode": "mpi_centralized",
+  "search_backend": "numpy",
+  "faiss_num_threads": null,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_queries_on_each_rank",
   "world_size": 2,
   "num_vectors": 5000,
   "num_queries": 3,
   "dimension": 2560,
   "top_k": 10,
-  "merge_time_sec": 9.050499999996298e-05,
-  "total_time_sec": 0.006624662000000003,
+  "load_time_sec_max": 0.026685736000000015,
+  "load_time_sec_mean": 0.025120039500000024,
+  "mpi_total_time_sec": 0.006319110999999933,
+  "merge_time_sec": 9.022199999997316e-05,
+  "total_time_sec": 0.03300484699999995,
   "rank_info": [
     {
       "rank": 0,
@@ -13,8 +22,9 @@
       "shard_start": 0,
       "shard_end": 2500,
       "num_local_vectors": 2500,
-      "local_search_time_sec": 0.005562426999999981,
-      "communication_time_sec": 0.0009421490000000032
+      "load_time_sec": 0.023554343000000033,
+      "local_search_time_sec": 0.0055513839999999925,
+      "communication_time_sec": 0.0006453869999999418
     },
     {
       "rank": 1,
@@ -22,8 +32,9 @@
       "shard_start": 2500,
       "shard_end": 5000,
       "num_local_vectors": 2500,
-      "local_search_time_sec": 0.006212329000000016,
-      "communication_time_sec": 0.0001785949999999481
+      "load_time_sec": 0.026685736000000015,
+      "local_search_time_sec": 0.005919827000000044,
+      "communication_time_sec": 0.00019115800000002459
     }
   ]
 }
