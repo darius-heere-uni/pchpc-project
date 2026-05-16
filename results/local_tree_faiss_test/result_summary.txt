@@ -4,6 +4,9 @@ Run summary:
   Retrieval mode:        mpi_tree
   Search backend:        faiss
   FAISS threads/rank:    1
+  Loading strategy:      shard_aware_shared_npy
+  Vector storage:        single_vectors_npy
+  Query loading:         full_queries_on_each_rank
   MPI ranks:             4
   Vectors:               5000
   Queries:               3
@@ -11,17 +14,17 @@ Run summary:
   Top-k:                 10
 
 Timing summary:
-  Load time max:         0.035224 s
-  Load time mean:        0.035215 s
-  MPI retrieval time:    0.045181 s
-  Merge time:            0.000320 s
-  Total time approx.:    0.080405 s
+  Load time max:         0.008300 s
+  Load time mean:        0.007865 s
+  MPI retrieval time:    0.050231 s
+  Merge time:            0.000377 s
+  Total time approx.:    0.058531 s
 
 Shard distribution:
-  Rank  0: [0, 1250) (1250 vectors), load=0.035201 s, search=0.044797s, comm=0.000115s, local_merge=0.000201s
-  Rank  1: [1250, 2500) (1250 vectors), load=0.035224 s, search=0.044626s, comm=0.000185s, local_merge=0.000000s
-  Rank  2: [2500, 3750) (1250 vectors), load=0.035213 s, search=0.044652s, comm=0.000190s, local_merge=0.000177s
-  Rank  3: [3750, 5000) (1250 vectors), load=0.035224 s, search=0.044551s, comm=0.000121s, local_merge=0.000000s
+  Rank  0: [0, 1250) (1250 vectors), load=0.008300 s, search=0.049788s, comm=0.000150s, local_merge=0.000223s
+  Rank  1: [1250, 2500) (1250 vectors), load=0.007723 s, search=0.049714s, comm=0.000128s, local_merge=0.000000s
+  Rank  2: [2500, 3750) (1250 vectors), load=0.007719 s, search=0.049817s, comm=0.000135s, local_merge=0.000147s
+  Rank  3: [3750, 5000) (1250 vectors), load=0.007718 s, search=0.049791s, comm=0.000102s, local_merge=0.000000s
 
 Top-k preview for first query:
    1. vector_id=    4070, score=186.855438

@@ -3,16 +3,17 @@ from typing import Any
 import numpy as np
 from mpi4py import MPI
 
-from dense_retrieval.data.sharding import get_shard_bounds
 from dense_retrieval.merge import merge_topk
 from dense_retrieval.search.backends import search_topk
 
 
 def run_mpi_centralized_retrieval(
-    vectors: np.ndarray,
+    local_vectors: np.ndarray,
     queries: np.ndarray,
     top_k: int,
     comm: MPI.Comm,
+    shard_start_idx: int,
+    num_global_vectors: int,
     load_time_sec: float | None = None,
     search_backend: str = "numpy",
     faiss_num_threads: int | None = None,
@@ -20,20 +21,14 @@ def run_mpi_centralized_retrieval(
     """
     MPI retrieval with centralized merging on rank 0.
 
-    Each rank searches its local shard.
+    Each rank receives only its local vector shard.
+    Each rank searches its shard.
     Rank 0 gathers all local top-k results and merges them.
     """
     rank = comm.Get_rank()
     world_size = comm.Get_size()
 
-    num_vectors = vectors.shape[0]
-    start_idx, end_idx = get_shard_bounds(
-        num_items=num_vectors,
-        rank=rank,
-        world_size=world_size,
-    )
-
-    local_vectors = vectors[start_idx:end_idx]
+    shard_end_idx = shard_start_idx + local_vectors.shape[0]
 
     comm.Barrier()
     mpi_total_start = MPI.Wtime()
@@ -50,7 +45,8 @@ def run_mpi_centralized_retrieval(
 
     search_end = MPI.Wtime()
 
-    local_indices = local_indices + start_idx
+    # Convert local shard indices to global vector IDs.
+    local_indices = local_indices + shard_start_idx
 
     communication_start = MPI.Wtime()
 
@@ -62,9 +58,9 @@ def run_mpi_centralized_retrieval(
     rank_info = {
         "rank": rank,
         "world_size": world_size,
-        "shard_start": start_idx,
-        "shard_end": end_idx,
-        "num_local_vectors": end_idx - start_idx,
+        "shard_start": shard_start_idx,
+        "shard_end": shard_end_idx,
+        "num_local_vectors": local_vectors.shape[0],
         "load_time_sec": load_time_sec,
         "local_search_time_sec": search_end - search_start,
         "communication_time_sec": communication_end - communication_start,
@@ -108,10 +104,13 @@ def run_mpi_centralized_retrieval(
                 "retrieval_mode": "mpi_centralized",
                 "search_backend": search_backend,
                 "faiss_num_threads": faiss_num_threads,
+                "loading_strategy": "shard_aware_shared_npy",
+                "vector_storage": "single_vectors_npy",
+                "query_loading": "full_queries_on_each_rank",
                 "world_size": world_size,
-                "num_vectors": num_vectors,
+                "num_vectors": num_global_vectors,
                 "num_queries": queries.shape[0],
-                "dimension": vectors.shape[1],
+                "dimension": local_vectors.shape[1],
                 "top_k": top_k,
                 "load_time_sec_max": load_time_sec_max,
                 "load_time_sec_mean": load_time_sec_mean,

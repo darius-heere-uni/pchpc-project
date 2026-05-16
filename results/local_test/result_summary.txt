@@ -1,6 +1,11 @@
 Retrieval finished.
 
 Run summary:
+  Retrieval mode:        mpi_centralized
+  Search backend:        numpy
+  Loading strategy:      shard_aware_shared_npy
+  Vector storage:        single_vectors_npy
+  Query loading:         full_queries_on_each_rank
   MPI ranks:             4
   Vectors:               5000
   Queries:               3
@@ -8,17 +13,17 @@ Run summary:
   Top-k:                 10
 
 Timing summary:
-  Load time max:         0.112376 s
-  Load time mean:        0.110585 s
-  MPI retrieval time:    0.006417 s
-  Merge time:            0.000115 s
-  Total time approx.:    0.118793 s
+  Load time max:         0.008242 s
+  Load time mean:        0.007791 s
+  MPI retrieval time:    0.003930 s
+  Merge time:            0.000100 s
+  Total time approx.:    0.012172 s
 
 Shard distribution:
-  Rank  0: [0, 1250) (1250 vectors), load=0.112376 s, search=0.005451s, comm=0.000820s
-  Rank  1: [1250, 2500) (1250 vectors), load=0.109987 s, search=0.005467s, comm=0.000355s
-  Rank  2: [2500, 3750) (1250 vectors), load=0.109989 s, search=0.005437s, comm=0.000384s
-  Rank  3: [3750, 5000) (1250 vectors), load=0.109988 s, search=0.005437s, comm=0.000381s
+  Rank  0: [0, 1250) (1250 vectors), load=0.007715 s, search=0.003583s, comm=0.000221s
+  Rank  1: [1250, 2500) (1250 vectors), load=0.007487 s, search=0.003581s, comm=0.000107s
+  Rank  2: [2500, 3750) (1250 vectors), load=0.007718 s, search=0.003577s, comm=0.000186s
+  Rank  3: [3750, 5000) (1250 vectors), load=0.008242 s, search=0.003607s, comm=0.000159s
 
 Top-k preview for first query:
    1. vector_id=    4070, score=186.855499

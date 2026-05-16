@@ -121,6 +121,15 @@ def format_result_summary(result: dict[str, Any]) -> str:
     if metrics.get("search_backend") == "faiss":
         lines.append(f"  FAISS threads/rank:    {metrics.get('faiss_num_threads')}")
 
+    if "loading_strategy" in metrics:
+        lines.append(f"  Loading strategy:      {metrics['loading_strategy']}")
+
+    if "vector_storage" in metrics:
+        lines.append(f"  Vector storage:        {metrics['vector_storage']}")
+
+    if "query_loading" in metrics:
+        lines.append(f"  Query loading:         {metrics['query_loading']}")
+
     lines.append(f"  MPI ranks:             {metrics['world_size']}")
     lines.append(f"  Vectors:               {metrics['num_vectors']}")
     lines.append(f"  Queries:               {metrics['num_queries']}")

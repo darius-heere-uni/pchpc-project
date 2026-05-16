@@ -4,7 +4,10 @@ import numpy as np
 from mpi4py import MPI
 
 from dense_retrieval.config import load_config
-from dense_retrieval.data.storage import load_dataset
+from dense_retrieval.data.loading import (
+    load_dataset_shard,
+    load_full_dataset_for_baseline,
+)
 from dense_retrieval.paths import get_dataset_dir
 from dense_retrieval.retrieval.mpi_centralized import run_mpi_centralized_retrieval
 from dense_retrieval.retrieval.mpi_tree import run_mpi_tree_retrieval
@@ -37,29 +40,35 @@ def parse_args() -> argparse.Namespace:
 
 def run_selected_retrieval(
     mode: str,
-    vectors,
+    local_vectors,
     queries,
     top_k: int,
     comm: MPI.Comm,
+    shard_start_idx: int,
+    num_global_vectors: int,
     search_backend: str,
     faiss_num_threads: int | None,
 ):
     if mode == "mpi_centralized":
         return run_mpi_centralized_retrieval(
-            vectors=vectors,
+            local_vectors=local_vectors,
             queries=queries,
             top_k=top_k,
             comm=comm,
+            shard_start_idx=shard_start_idx,
+            num_global_vectors=num_global_vectors,
             search_backend=search_backend,
             faiss_num_threads=faiss_num_threads,
         )
 
     if mode == "mpi_tree":
         return run_mpi_tree_retrieval(
-            vectors=vectors,
+            local_vectors=local_vectors,
             queries=queries,
             top_k=top_k,
             comm=comm,
+            shard_start_idx=shard_start_idx,
+            num_global_vectors=num_global_vectors,
             search_backend=search_backend,
             faiss_num_threads=faiss_num_threads,
         )
@@ -131,17 +140,31 @@ def main() -> None:
         if search_backend == "faiss":
             print(f"FAISS threads per rank: {faiss_num_threads}")
         print(f"Loading dataset from: {dataset_dir}")
+        print("Loading strategy: shard-aware loading from shared vectors.npy")
 
-    vectors, queries, _metadata = load_dataset(dataset_dir)
+    (
+        local_vectors,
+        queries,
+        _metadata,
+        shard_start,
+        _shard_end,
+        num_global_vectors,
+    ) = load_dataset_shard(
+        dataset_dir=dataset_dir,
+        rank=rank,
+        world_size=world_size,
+    )
 
     top_k = search_cfg["top_k"]
 
     mpi_result = run_selected_retrieval(
         mode=retrieval_cfg["mode"],
-        vectors=vectors,
+        local_vectors=local_vectors,
         queries=queries,
         top_k=top_k,
         comm=comm,
+        shard_start_idx=shard_start,
+        num_global_vectors=num_global_vectors,
         search_backend=search_backend,
         faiss_num_threads=faiss_num_threads,
     )
@@ -149,9 +172,13 @@ def main() -> None:
     if rank == 0:
         print("Running sequential NumPy baseline on rank 0.")
 
+        full_vectors, full_queries, _metadata = load_full_dataset_for_baseline(
+            dataset_dir
+        )
+
         seq_scores, seq_indices = run_sequential_retrieval(
-            vectors=vectors,
-            queries=queries,
+            vectors=full_vectors,
+            queries=full_queries,
             top_k=top_k,
         )
 
