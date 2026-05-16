@@ -97,3 +97,30 @@ comm = MPI.COMM_WORLD
 print(f"hello from rank {comm.Get_rank()} of {comm.Get_size()}")
 '
 ```
+
+### Run Configurable Slurm Job Script
+
+Default 2 node test:
+
+```bash
+sbatch slurm/benchmark.sbatch configs/cluster_benchmark.json
+```
+
+Override Slurm resources from the command line:
+
+```bash
+sbatch --nodes=4 --ntasks-per-node=1 --cpus-per-task=1 slurm/benchmark.sbatch configs/cluster_benchmark.json
+```
+
+For a rank/thread experiment:
+
+```bash
+sbatch --nodes=1 --ntasks-per-node=4 --cpus-per-task=4 slurm/benchmark.sbatch configs/cluster_benchmark_faiss_threads4.json
+```
+_Note: faiss_num_threads inside the json config should match --cpus-per-task_
+
+To skip the correctness check in larger benchmark runs:
+
+```bash
+sbatch --export=ALL,RUN_CORRECTNESS=0 --nodes=4 --ntasks-per-node=1 --cpus-per-task=1 slurm/benchmark.sbatch configs/cluster_benchmark.json
+```
