@@ -1,0 +1,145 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "cluster_benchmark_numpy_centralized",
+  "retrieval_mode": "mpi_centralized",
+  "search_backend": "numpy",
+  "faiss_num_threads": null,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_queries_on_each_rank",
+  "world_size": 4,
+  "num_vectors": 5000,
+  "num_queries": 3,
+  "dimension": 2560,
+  "top_k": 10,
+  "warmup_runs": 2,
+  "measurement_runs": 5,
+  "initial_load_time_sec_max": 0.015743041999999985,
+  "initial_load_time_sec_mean": 0.014280494000000019,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 1250,
+      "num_local_vectors": 1250,
+      "load_time_sec": 0.012930818000000066
+    },
+    {
+      "rank": 1,
+      "shard_start": 1250,
+      "shard_end": 2500,
+      "num_local_vectors": 1250,
+      "load_time_sec": 0.013919622999999992
+    },
+    {
+      "rank": 2,
+      "shard_start": 2500,
+      "shard_end": 3750,
+      "num_local_vectors": 1250,
+      "load_time_sec": 0.015743041999999985
+    },
+    {
+      "rank": 3,
+      "shard_start": 3750,
+      "shard_end": 5000,
+      "num_local_vectors": 1250,
+      "load_time_sec": 0.014528493000000031
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 1.3519999999989096e-05,
+  "initial_index_build_time_sec_mean": 9.719249999984303e-06,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 1.3519999999989096e-05
+    },
+    {
+      "rank": 1,
+      "index_build_time_sec": 7.117999999861624e-06
+    },
+    {
+      "rank": 2,
+      "index_build_time_sec": 1.0515000000044239e-05
+    },
+    {
+      "rank": 3,
+      "index_build_time_sec": 7.724000000042253e-06
+    }
+  ],
+  "dataset_metadata": {
+    "name": "small_random_2560d",
+    "num_vectors": 5000,
+    "num_queries": 3,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false,
+    "vectors_shape": [
+      5000,
+      2560
+    ],
+    "queries_shape": [
+      3,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 5,
+      "mean": 0.0025024034000000308,
+      "median": 0.0025034569999999867,
+      "min": 0.0024879349999999967,
+      "max": 0.0025234470000000675,
+      "std": 1.5030950295975779e-05
+    },
+    "merge_time_sec": {
+      "count": 5,
+      "mean": 6.107140000000122e-05,
+      "median": 6.0648000000051994e-05,
+      "min": 5.461400000006389e-05,
+      "max": 6.775999999997229e-05,
+      "std": 5.077503008338811e-06
+    },
+    "max_local_search_time_sec": {
+      "count": 5,
+      "mean": 0.0022712338000000056,
+      "median": 0.0022705969999999853,
+      "min": 0.0022551860000000756,
+      "max": 0.002284828000000072,
+      "std": 1.0807364350290825e-05
+    },
+    "mean_local_search_time_sec": {
+      "count": 5,
+      "mean": 0.0022061514000000226,
+      "median": 0.0022018924999999967,
+      "min": 0.002198015249999935,
+      "max": 0.002215584000000048,
+      "std": 8.179259694146945e-06
+    },
+    "max_communication_time_sec": {
+      "count": 5,
+      "mean": 0.000219687799999968,
+      "median": 0.0002168049999999866,
+      "min": 0.00020450499999991045,
+      "max": 0.0002454410000000129,
+      "std": 1.6398134869596964e-05
+    },
+    "mean_communication_time_sec": {
+      "count": 5,
+      "mean": 0.00011970590000000559,
+      "median": 0.00012181075000003427,
+      "min": 0.00011396699999996485,
+      "max": 0.0001237985000000219,
+      "std": 4.320020415923834e-06
+    },
+    "throughput_queries_per_sec": {
+      "count": 5,
+      "mean": 1198.8820247846757,
+      "median": 1198.3429313944741,
+      "min": 1188.8500134934159,
+      "max": 1205.8192838639288,
+      "std": 7.189817078727521
+    }
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "cluster_benchmark_faiss_threads4",
+  "retrieval_mode": "mpi_centralized",
+  "search_backend": "faiss",
+  "faiss_num_threads": 4,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_queries_on_each_rank",
+  "world_size": 4,
+  "num_vectors": 5000,
+  "num_queries": 3,
+  "dimension": 2560,
+  "top_k": 10,
+  "warmup_runs": 2,
+  "measurement_runs": 5,
+  "initial_load_time_sec_max": 0.017719923999999998,
+  "initial_load_time_sec_mean": 0.016740817749999998,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 1250,
+      "num_local_vectors": 1250,
+      "load_time_sec": 0.017719923999999998
+    },
+    {
+      "rank": 1,
+      "shard_start": 1250,
+      "shard_end": 2500,
+      "num_local_vectors": 1250,
+      "load_time_sec": 0.017227300999999973
+    },
+    {
+      "rank": 2,
+      "shard_start": 2500,
+      "shard_end": 3750,
+      "num_local_vectors": 1250,
+      "load_time_sec": 0.015870655999999983
+    },
+    {
+      "rank": 3,
+      "shard_start": 3750,
+      "shard_end": 5000,
+      "num_local_vectors": 1250,
+      "load_time_sec": 0.016145390000000037
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 0.04402951899999996,
+  "initial_index_build_time_sec_mean": 0.043650986749999995,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 0.04402951899999996
+    },
+    {
+      "rank": 1,
+      "index_build_time_sec": 0.043850767999999984
+    },
+    {
+      "rank": 2,
+      "index_build_time_sec": 0.043689211000000006
+    },
+    {
+      "rank": 3,
+      "index_build_time_sec": 0.04303444900000003
+    }
+  ],
+  "dataset_metadata": {
+    "name": "small_random_2560d",
+    "num_vectors": 5000,
+    "num_queries": 3,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false,
+    "vectors_shape": [
+      5000,
+      2560
+    ],
+    "queries_shape": [
+      3,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 5,
+      "mean": 0.002023294799999986,
+      "median": 0.001992151000000053,
+      "min": 0.0019505779999999806,
+      "max": 0.0021480739999999443,
+      "std": 8.2808305680636e-05
+    },
+    "merge_time_sec": {
+      "count": 5,
+      "mean": 0.00011576659999998907,
+      "median": 0.00011641299999998189,
+      "min": 0.00010751999999991657,
+      "max": 0.0001219209999999693,
+      "std": 5.262624658884128e-06
+    },
+    "max_local_search_time_sec": {
+      "count": 5,
+      "mean": 0.0016917259999999824,
+      "median": 0.0016479529999999798,
+      "min": 0.0016340639999999906,
+      "max": 0.0018210719999999236,
+      "std": 8.07001064961929e-05
+    },
+    "mean_local_search_time_sec": {
+      "count": 5,
+      "mean": 0.0015716269999999921,
+      "median": 0.0015404022499999892,
+      "min": 0.001532671749999992,
+      "max": 0.001658159250000013,
+      "std": 5.3101112724344065e-05
+    },
+    "max_communication_time_sec": {
+      "count": 5,
+      "mean": 0.00017742680000003562,
+      "median": 0.0001710570000000855,
+      "min": 0.00016002900000000597,
+      "max": 0.0001951830000000987,
+      "std": 1.4964508117560442e-05
+    },
+    "mean_communication_time_sec": {
+      "count": 5,
+      "mean": 0.00010592964999999732,
+      "median": 0.00011028149999997572,
+      "min": 9.399924999997644e-05,
+      "max": 0.00011301900000001974,
+      "std": 8.517568541699939e-06
+    },
+    "throughput_queries_per_sec": {
+      "count": 5,
+      "mean": 1484.6732922046729,
+      "median": 1505.9099435735143,
+      "min": 1396.5999309148929,
+      "max": 1538.005657810162,
+      "std": 59.36866547952959
+    }
+  }
+}

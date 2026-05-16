@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=pchpc-bench
 #SBATCH --partition=scc-cpu
-#SBATCH --time=00:10:00
+#SBATCH --time=00:15:00
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
@@ -11,11 +11,21 @@
 set -euo pipefail
 
 CONFIG_PATH="${1:-configs/cluster_benchmark.json}"
+RUN_CORRECTNESS="${RUN_CORRECTNESS:-1}"
 
 echo "Job started on: $(date)"
 echo "Submit directory: $SLURM_SUBMIT_DIR"
 echo "Job ID: $SLURM_JOB_ID"
 echo "Config path: $CONFIG_PATH"
+
+echo
+echo "Slurm resources:"
+echo "  Nodes:            ${SLURM_JOB_NUM_NODES}"
+echo "  Tasks total:      ${SLURM_NTASKS}"
+echo "  Tasks per node:   ${SLURM_NTASKS_PER_NODE}"
+echo "  CPUs per task:    ${SLURM_CPUS_PER_TASK:-1}"
+
+echo
 echo "Allocated nodes:"
 scontrol show hostnames "$SLURM_JOB_NODELIST"
 
@@ -51,8 +61,59 @@ echo "MPI executable:"
 which mpiexec
 
 echo
+echo "Configuring thread environment."
+CPUS_PER_TASK="${SLURM_CPUS_PER_TASK:-1}"
+
+export OMP_NUM_THREADS="$CPUS_PER_TASK"
+export OPENBLAS_NUM_THREADS="$CPUS_PER_TASK"
+export MKL_NUM_THREADS="$CPUS_PER_TASK"
+export NUMEXPR_NUM_THREADS="$CPUS_PER_TASK"
+export OMP_PROC_BIND=close
+export OMP_PLACES=cores
+
+echo "OMP_NUM_THREADS=$OMP_NUM_THREADS"
+echo "OPENBLAS_NUM_THREADS=$OPENBLAS_NUM_THREADS"
+echo "MKL_NUM_THREADS=$MKL_NUM_THREADS"
+echo "NUMEXPR_NUM_THREADS=$NUMEXPR_NUM_THREADS"
+echo "OMP_PROC_BIND=$OMP_PROC_BIND"
+echo "OMP_PLACES=$OMP_PLACES"
+
+echo
 echo "Python package check:"
 python -c 'import numpy; import faiss; from mpi4py import MPI; print("environment OK"); print(MPI.Get_library_version())'
+
+echo
+echo "Checking config consistency:"
+python - "$CONFIG_PATH" "$CPUS_PER_TASK" <<'PY'
+import sys
+from dense_retrieval.config import load_config
+
+config_path = sys.argv[1]
+cpus_per_task = int(sys.argv[2])
+
+cfg = load_config(config_path)
+
+search = cfg.get("search", {})
+retrieval = cfg.get("retrieval", {})
+benchmark = cfg.get("benchmark", {})
+
+print(f"  run_id:             {cfg['project']['run_id']}")
+print(f"  retrieval mode:     {retrieval.get('mode')}")
+print(f"  search backend:     {search.get('backend')}")
+print(f"  top_k:              {search.get('top_k')}")
+print(f"  faiss_num_threads:  {search.get('faiss_num_threads')}")
+print(f"  warmup_runs:        {benchmark.get('warmup_runs')}")
+print(f"  measurement_runs:   {benchmark.get('measurement_runs')}")
+
+faiss_threads = search.get("faiss_num_threads")
+if search.get("backend") == "faiss" and faiss_threads is not None:
+    if int(faiss_threads) != cpus_per_task:
+        print()
+        print("WARNING:")
+        print(f"  Config faiss_num_threads={faiss_threads},")
+        print(f"  but Slurm cpus-per-task={cpus_per_task}.")
+        print("  For rank/thread experiments these should usually match.")
+PY
 
 echo
 echo "Testing MPI world under mpiexec:"
@@ -80,9 +141,14 @@ else
     echo "Dataset already exists. Skipping generation."
 fi
 
-echo
-echo "Running correctness check before benchmark."
-mpiexec -n "$SLURM_NTASKS" python check_correctness.py --config "$CONFIG_PATH"
+if [[ "$RUN_CORRECTNESS" == "1" ]]; then
+    echo
+    echo "Running correctness check before benchmark."
+    mpiexec -n "$SLURM_NTASKS" python check_correctness.py --config "$CONFIG_PATH"
+else
+    echo
+    echo "Skipping correctness check because RUN_CORRECTNESS=$RUN_CORRECTNESS"
+fi
 
 echo
 echo "Running benchmark."
