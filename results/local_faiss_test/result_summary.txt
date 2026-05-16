@@ -1,0 +1,39 @@
+Retrieval finished.
+
+Run summary:
+  Retrieval mode:        mpi_centralized
+  Search backend:        faiss
+  FAISS threads/rank:    1
+  Loading strategy:      shard_aware_shared_npy
+  Vector storage:        single_vectors_npy
+  Query loading:         full_queries_on_each_rank
+  MPI ranks:             4
+  Vectors:               5000
+  Queries:               3
+  Dimension:             2560
+  Top-k:                 10
+
+Timing summary:
+  Load time max:         0.008572 s
+  Load time mean:        0.008119 s
+  MPI retrieval time:    0.051270 s
+  Merge time:            0.000244 s
+  Total time approx.:    0.059842 s
+
+Shard distribution:
+  Rank  0: [0, 1250) (1250 vectors), load=0.008572 s, search=0.050788s, comm=0.000206s
+  Rank  1: [1250, 2500) (1250 vectors), load=0.007964 s, search=0.050782s, comm=0.000120s
+  Rank  2: [2500, 3750) (1250 vectors), load=0.007970 s, search=0.050711s, comm=0.000184s
+  Rank  3: [3750, 5000) (1250 vectors), load=0.007970 s, search=0.046421s, comm=0.004430s
+
+Top-k preview for first query:
+   1. vector_id=    4070, score=186.855438
+   2. vector_id=    2498, score=170.519379
+   3. vector_id=    2510, score=163.982483
+   4. vector_id=     266, score=151.866531
+   5. vector_id=     662, score=151.787521
+   6. vector_id=     883, score=149.307220
+   7. vector_id=    2606, score=144.920639
+   8. vector_id=    1885, score=144.673782
+   9. vector_id=    2144, score=141.039459
+  10. vector_id=    3556, score=140.456406

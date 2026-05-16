@@ -1,0 +1,32 @@
+{
+  "project": {
+    "name": "pchpc-project",
+    "run_id": "local_tree_faiss_test"
+  },
+
+  "paths": {
+    "data_root": "data",
+    "results_root": "results"
+  },
+
+  "dataset": {
+    "name": "small_random_2560d",
+    "num_vectors": 5000,
+    "num_queries": 3,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false
+  },
+
+  "search": {
+    "backend": "faiss",
+    "top_k": 10,
+    "similarity": "dot",
+    "faiss_num_threads": 1
+  },
+
+  "retrieval": {
+    "mode": "mpi_tree"
+  }
+}
