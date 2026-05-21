@@ -124,3 +124,15 @@ To skip the correctness check in larger benchmark runs:
 ```bash
 sbatch --export=ALL,RUN_CORRECTNESS=0 --nodes=4 --ntasks-per-node=1 --cpus-per-task=1 slurm/benchmark.sbatch configs/cluster_benchmark.json
 ```
+
+
+### Generate a Dataset using a Slurm Job
+
+```bash
+sbatch slurm/generate_dataset.sbatch configs/cluster_benchmark_calibrate.json
+```
+
+To force a re-generation:
+```bash
+sbatch --export=ALL,FORCE=1 slurm/generate_dataset.sbatch configs/cluster_benchmark_calibrate.json
+```

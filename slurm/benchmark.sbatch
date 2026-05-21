@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=pchpc-bench
 #SBATCH --partition=scc-cpu
-#SBATCH --time=00:15:00
+#SBATCH --time=00:03:00
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
