@@ -4,7 +4,7 @@ Benchmark setup:
   Run ID:             cluster_benchmark_calibrate
   Retrieval mode:     mpi_centralized
   Search backend:     faiss
-  MPI ranks:          1
+  MPI ranks:          16
   Vectors:            100000
   Queries:            100
   Dimension:          2560
@@ -14,45 +14,45 @@ Benchmark setup:
   FAISS threads/rank: 1
 
 Initial loading:
-  Load time max:      0.775204 s
-  Load time mean:     0.775204 s
+  Load time max:      0.260614 s
+  Load time mean:     0.252367 s
 
 Initial local index construction:
-  Index build max:    0.710531 s
-  Index build mean:   0.710531 s
+  Index build max:    0.121203 s
+  Index build mean:   0.116276 s
   Index reuse:        True
 
 Measured retrieval timings:
   MPI retrieval time:
-    mean:   0.624272
-    median: 0.611864
-    min:    0.549662
-    max:    0.753650
-    std:    0.076689
+    mean:   0.052722
+    median: 0.055901
+    min:    0.042543
+    max:    0.064284
+    std:    0.009591
   Merge time:
-    mean:   0.000188
-    median: 0.000174
-    min:    0.000158
-    max:    0.000267
-    std:    0.000044
+    mean:   0.000513
+    median: 0.000489
+    min:    0.000458
+    max:    0.000662
+    std:    0.000085
   Max local search time:
-    mean:   0.623856
-    median: 0.611515
-    min:    0.549316
-    max:    0.753276
-    std:    0.076709
+    mean:   0.051195
+    median: 0.054774
+    min:    0.041580
+    max:    0.061597
+    std:    0.008980
   Max communication time:
-    mean:   0.000187
-    median: 0.000156
-    min:    0.000146
-    max:    0.000323
-    std:    0.000076
+    mean:   0.010338
+    median: 0.007850
+    min:    0.003725
+    max:    0.019459
+    std:    0.007287
   Throughput queries/sec:
-    mean:   161.950856
-    median: 163.434949
-    min:    132.687618
-    max:    181.930072
-    std:    18.033750
+    mean:   1949.534657
+    median: 1788.881084
+    min:    1555.587746
+    max:    2350.581966
+    std:    364.455484
 
 Note:
   In benchmark mode, the local search index is built once per rank and reused across warmup and measured retrieval runs.

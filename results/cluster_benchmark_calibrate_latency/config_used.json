@@ -3,12 +3,10 @@
     "name": "pchpc-project",
     "run_id": "cluster_benchmark_calibrate_latency"
   },
-
   "paths": {
     "data_root": "$PROJECT_DIR/darius/pchpc-project/data",
     "results_root": "results"
   },
-
   "dataset": {
     "name": "benchmark_calibrate_latency_2560d",
     "num_vectors": 100000,
@@ -18,18 +16,15 @@
     "seed": 42,
     "normalize": false
   },
-
   "search": {
     "backend": "faiss",
     "faiss_num_threads": 1,
     "top_k": 10,
     "similarity": "dot"
   },
-
   "retrieval": {
     "mode": "mpi_centralized"
   },
-
   "benchmark": {
     "warmup_runs": 5,
     "measurement_runs": 100
