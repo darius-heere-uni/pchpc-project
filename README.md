@@ -159,3 +159,15 @@ python collect_benchmark_results.py \
   --output analysis/benchmark_results.csv \
   --overwrite
 ```
+
+Run it inside the conda environment if the Python on the cluster is too outdated:
+
+```bash
+module purge
+module load miniforge3
+
+conda run -n mpi_course python collect_benchmark_results.py \
+  --results-root results \
+  --output analysis/benchmark_results.csv
+```
+

@@ -1,0 +1,54 @@
+Benchmark finished.
+
+Benchmark setup:
+  Run ID:             cluster_benchmark_numpy_centralized
+  Retrieval mode:     mpi_centralized
+  Search backend:     numpy
+  MPI ranks:          2
+  Vectors:            5000
+  Queries:            3
+  Dimension:          2560
+  Top-k:              10
+  Warmup runs:        2
+  Measurement runs:   5
+
+Initial loading:
+  Load time max:      0.276151 s
+  Load time mean:     0.255675 s
+
+Initial local index construction:
+  Index build max:    0.000007 s
+  Index build mean:   0.000007 s
+  Index reuse:        True
+
+Measured retrieval timings:
+  MPI retrieval time:
+    mean:   0.004663
+    median: 0.004651
+    min:    0.004635
+    max:    0.004696
+    std:    0.000030
+  Merge time:
+    mean:   0.000055
+    median: 0.000055
+    min:    0.000052
+    max:    0.000058
+    std:    0.000002
+  Max local search time:
+    mean:   0.004498
+    median: 0.004490
+    min:    0.004474
+    max:    0.004529
+    std:    0.000024
+  Max communication time:
+    mean:   0.000090
+    median: 0.000091
+    min:    0.000081
+    max:    0.000095
+    std:    0.000006
+  Throughput queries/sec:
+    mean:   643.393725
+    median: 645.067790
+    min:    638.783348
+    max:    647.226290
+    std:    4.173966
