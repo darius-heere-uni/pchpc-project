@@ -7,7 +7,11 @@ from mpi4py import MPI
 from dense_retrieval.config import load_config
 from dense_retrieval.data.loading import load_dataset_shard
 from dense_retrieval.paths import get_dataset_dir
-from dense_retrieval.results import get_run_dir, write_json
+from dense_retrieval.results import (
+    collect_runtime_metadata,
+    get_benchmark_run_dir,
+    write_json,
+)
 from dense_retrieval.retrieval.mpi_centralized import run_mpi_centralized_retrieval
 from dense_retrieval.retrieval.mpi_tree import run_mpi_tree_retrieval
 from dense_retrieval.search.local_index import LocalSearchIndex
@@ -214,8 +218,17 @@ def save_benchmark_outputs(
     benchmark_metrics: dict[str, Any],
     measured_runs: list[dict[str, Any]],
 ) -> dict[str, str]:
-    run_dir = get_run_dir(config)
+    run_dir = get_benchmark_run_dir(
+        config=config,
+        world_size=benchmark_metrics["world_size"],
+    )
     run_dir.mkdir(parents=True, exist_ok=True)
+
+    benchmark_metrics["output"] = {
+        "run_dir": str(run_dir),
+        "experiment_dir": str(run_dir.parent),
+        "unique_run_name": run_dir.name,
+    }
 
     summary_path = run_dir / "benchmark_summary.txt"
     metrics_path = run_dir / "benchmark_metrics.json"
@@ -423,6 +436,7 @@ def main() -> None:
         benchmark_metrics = {
             "benchmark_mode": "hot_repeated_retrieval",
             "run_id": config["project"]["run_id"],
+            "runtime_metadata": collect_runtime_metadata(args.config),
             "retrieval_mode": retrieval_mode,
             "search_backend": search_backend,
             "faiss_num_threads": faiss_num_threads,
