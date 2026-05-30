@@ -1,0 +1,54 @@
+Benchmark finished.
+
+Benchmark setup:
+  Run ID:             scorep_smoke
+  Retrieval mode:     mpi_centralized
+  Search backend:     numpy
+  MPI ranks:          2
+  Vectors:            5000
+  Queries:            3
+  Dimension:          2560
+  Top-k:              10
+  Warmup runs:        0
+  Measurement runs:   1
+
+Initial loading:
+  Load time max:      0.345037 s
+  Load time mean:     0.342240 s
+
+Initial local index construction:
+  Index build max:    0.000005 s
+  Index build mean:   0.000005 s
+  Index reuse:        True
+
+Measured retrieval timings:
+  MPI retrieval time:
+    mean:   0.047452
+    median: 0.047452
+    min:    0.047452
+    max:    0.047452
+    std:    0.000000
+  Merge time:
+    mean:   0.000081
+    median: 0.000081
+    min:    0.000081
+    max:    0.000081
+    std:    0.000000
+  Max local search time:
+    mean:   0.047198
+    median: 0.047198
+    min:    0.047198
+    max:    0.047198
+    std:    0.000000
+  Max communication time:
+    mean:   0.000143
+    median: 0.000143
+    min:    0.000143
+    max:    0.000143
+    std:    0.000000
+  Throughput queries/sec:
+    mean:   63.221647
+    median: 63.221647
+    min:    63.221647
+    max:    63.221647
+    std:    0.000000
