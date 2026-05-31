@@ -169,6 +169,8 @@ def build_row(
         "slurm_ntasks": slurm.get("SLURM_NTASKS"),
         "slurm_ntasks_per_node": slurm.get("SLURM_NTASKS_PER_NODE"),
         "slurm_cpus_per_task": slurm.get("SLURM_CPUS_PER_TASK"),
+        "slurm_mem_per_node_mb": slurm.get("SLURM_MEM_PER_NODE"),
+        "slurm_mem_per_cpu_mb": slurm.get("SLURM_MEM_PER_CPU"),
         "slurm_nodelist": slurm.get("SLURM_JOB_NODELIST"),
 
         # Main benchmark metadata
