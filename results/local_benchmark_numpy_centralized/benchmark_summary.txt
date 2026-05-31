@@ -13,37 +13,42 @@ Benchmark setup:
   Measurement runs:   5
 
 Initial loading:
-  Load time max:      0.009141 s
-  Load time mean:     0.008466 s
+  Load time max:      0.009811 s
+  Load time mean:     0.009451 s
+
+Initial local index construction:
+  Index build max:    0.000007 s
+  Index build mean:   0.000006 s
+  Index reuse:        True
 
 Measured retrieval timings:
   MPI retrieval time:
-    mean:   0.004145
-    median: 0.004172
-    min:    0.003717
-    max:    0.004586
-    std:    0.000311
+    mean:   0.004421
+    median: 0.004391
+    min:    0.003651
+    max:    0.005284
+    std:    0.000710
   Merge time:
-    mean:   0.000081
-    median: 0.000080
-    min:    0.000067
-    max:    0.000095
-    std:    0.000012
+    mean:   0.000093
+    median: 0.000078
+    min:    0.000075
+    max:    0.000132
+    std:    0.000024
   Max local search time:
-    mean:   0.003903
-    median: 0.003928
-    min:    0.003486
-    max:    0.004326
-    std:    0.000300
+    mean:   0.004147
+    median: 0.004149
+    min:    0.003419
+    max:    0.004984
+    std:    0.000679
   Max communication time:
-    mean:   0.000194
-    median: 0.000136
-    min:    0.000129
-    max:    0.000380
-    std:    0.000107
+    mean:   0.000534
+    median: 0.000240
+    min:    0.000159
+    max:    0.001313
+    std:    0.000501
   Throughput queries/sec:
-    mean:   727.005126
-    median: 719.015294
-    min:    654.186389
-    max:    807.146366
-    std:    54.853192
+    mean:   692.793006
+    median: 683.220025
+    min:    567.789527
+    max:    821.619099
+    std:    111.039275

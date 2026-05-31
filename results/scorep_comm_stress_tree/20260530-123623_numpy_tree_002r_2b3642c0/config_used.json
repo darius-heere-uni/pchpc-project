@@ -1,0 +1,31 @@
+{
+  "project": {
+    "name": "pchpc-project",
+    "run_id": "scorep_comm_stress_tree"
+  },
+  "paths": {
+    "data_root": "$PROJECT_DIR/darius/pchpc-project/data",
+    "results_root": "results"
+  },
+  "dataset": {
+    "name": "benchmark_calibrate_2560d",
+    "num_vectors": 100000,
+    "num_queries": 100,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false
+  },
+  "search": {
+    "backend": "numpy",
+    "top_k": 1000,
+    "similarity": "dot"
+  },
+  "retrieval": {
+    "mode": "mpi_tree"
+  },
+  "benchmark": {
+    "warmup_runs": 0,
+    "measurement_runs": 1
+  }
+}

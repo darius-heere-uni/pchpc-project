@@ -1,0 +1,54 @@
+Benchmark finished.
+
+Benchmark setup:
+  Run ID:             scorep_comm_stress
+  Retrieval mode:     mpi_centralized
+  Search backend:     numpy
+  MPI ranks:          4
+  Vectors:            100000
+  Queries:            100
+  Dimension:          2560
+  Top-k:              1000
+  Warmup runs:        0
+  Measurement runs:   1
+
+Initial loading:
+  Load time max:      0.289514 s
+  Load time mean:     0.285892 s
+
+Initial local index construction:
+  Index build max:    0.000007 s
+  Index build mean:   0.000007 s
+  Index reuse:        True
+
+Measured retrieval timings:
+  MPI retrieval time:
+    mean:   0.297236
+    median: 0.297236
+    min:    0.297236
+    max:    0.297236
+    std:    0.000000
+  Merge time:
+    mean:   0.012135
+    median: 0.012135
+    min:    0.012135
+    max:    0.012135
+    std:    0.000000
+  Max local search time:
+    mean:   0.279968
+    median: 0.279968
+    min:    0.279968
+    max:    0.279968
+    std:    0.000000
+  Max communication time:
+    mean:   0.128323
+    median: 0.128323
+    min:    0.128323
+    max:    0.128323
+    std:    0.000000
+  Throughput queries/sec:
+    mean:   336.433527
+    median: 336.433527
+    min:    336.433527
+    max:    336.433527
+    std:    0.000000

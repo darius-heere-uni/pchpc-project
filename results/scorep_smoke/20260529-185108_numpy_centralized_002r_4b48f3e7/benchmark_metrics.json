@@ -1,0 +1,149 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "scorep_smoke",
+  "runtime_metadata": {
+    "created_at": "2026-05-29T18:51:08",
+    "hostname": "c0075",
+    "pid": 2751474,
+    "cwd": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+    "config_path": "configs/cluster_scorep_smoke.json",
+    "slurm": {
+      "SLURM_JOB_ID": "14002725",
+      "SLURM_JOB_NAME": "pchpc-scorep",
+      "SLURM_SUBMIT_DIR": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+      "SLURM_JOB_NODELIST": "c0075",
+      "SLURM_JOB_NUM_NODES": "1",
+      "SLURM_NTASKS": "2",
+      "SLURM_NTASKS_PER_NODE": "2",
+      "SLURM_CPUS_PER_TASK": "1",
+      "SLURM_MEM_PER_NODE": "4096",
+      "SLURM_MEM_PER_CPU": null,
+      "SLURM_JOB_PARTITION": "scc-cpu",
+      "SLURM_CLUSTER_NAME": "emmy"
+    }
+  },
+  "retrieval_mode": "mpi_centralized",
+  "search_backend": "numpy",
+  "faiss_num_threads": null,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_queries_on_each_rank",
+  "world_size": 2,
+  "num_vectors": 5000,
+  "num_queries": 3,
+  "dimension": 2560,
+  "top_k": 10,
+  "warmup_runs": 0,
+  "measurement_runs": 1,
+  "initial_load_time_sec_max": 0.345037387,
+  "initial_load_time_sec_mean": 0.342239602,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 2500,
+      "num_local_vectors": 2500,
+      "load_time_sec": 0.339441817
+    },
+    {
+      "rank": 1,
+      "shard_start": 2500,
+      "shard_end": 5000,
+      "num_local_vectors": 2500,
+      "load_time_sec": 0.345037387
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 5.28700000002047e-06,
+  "initial_index_build_time_sec_mean": 5.277500000011592e-06,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 5.268000000002715e-06
+    },
+    {
+      "rank": 1,
+      "index_build_time_sec": 5.28700000002047e-06
+    }
+  ],
+  "dataset_metadata": {
+    "name": "small_random_2560d",
+    "num_vectors": 5000,
+    "num_queries": 3,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false,
+    "vectors_shape": [
+      5000,
+      2560
+    ],
+    "queries_shape": [
+      3,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 1,
+      "mean": 0.047452101000000024,
+      "median": 0.047452101000000024,
+      "min": 0.047452101000000024,
+      "max": 0.047452101000000024,
+      "std": 0.0
+    },
+    "merge_time_sec": {
+      "count": 1,
+      "mean": 8.143299999996412e-05,
+      "median": 8.143299999996412e-05,
+      "min": 8.143299999996412e-05,
+      "max": 8.143299999996412e-05,
+      "std": 0.0
+    },
+    "max_local_search_time_sec": {
+      "count": 1,
+      "mean": 0.04719783800000005,
+      "median": 0.04719783800000005,
+      "min": 0.04719783800000005,
+      "max": 0.04719783800000005,
+      "std": 0.0
+    },
+    "mean_local_search_time_sec": {
+      "count": 1,
+      "mean": 0.047196609500000014,
+      "median": 0.047196609500000014,
+      "min": 0.047196609500000014,
+      "max": 0.047196609500000014,
+      "std": 0.0
+    },
+    "max_communication_time_sec": {
+      "count": 1,
+      "mean": 0.00014304799999997897,
+      "median": 0.00014304799999997897,
+      "min": 0.00014304799999997897,
+      "max": 0.00014304799999997897,
+      "std": 0.0
+    },
+    "mean_communication_time_sec": {
+      "count": 1,
+      "mean": 0.00011256699999995234,
+      "median": 0.00011256699999995234,
+      "min": 0.00011256699999995234,
+      "max": 0.00011256699999995234,
+      "std": 0.0
+    },
+    "throughput_queries_per_sec": {
+      "count": 1,
+      "mean": 63.221647446126745,
+      "median": 63.221647446126745,
+      "min": 63.221647446126745,
+      "max": 63.221647446126745,
+      "std": 0.0
+    }
+  },
+  "output": {
+    "run_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/scorep_smoke/20260529-185108_numpy_centralized_002r_4b48f3e7",
+    "experiment_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/scorep_smoke",
+    "unique_run_name": "20260529-185108_numpy_centralized_002r_4b48f3e7"
+  }
+}

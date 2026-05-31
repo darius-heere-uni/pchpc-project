@@ -1,0 +1,277 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "cluster_benchmark_calibrate",
+  "retrieval_mode": "mpi_centralized",
+  "search_backend": "faiss",
+  "faiss_num_threads": 1,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_queries_on_each_rank",
+  "world_size": 16,
+  "num_vectors": 100000,
+  "num_queries": 100,
+  "dimension": 2560,
+  "top_k": 10,
+  "warmup_runs": 2,
+  "measurement_runs": 5,
+  "initial_load_time_sec_max": 0.26061414299999996,
+  "initial_load_time_sec_mean": 0.2523671691875,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 6250,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.2594824549999999
+    },
+    {
+      "rank": 1,
+      "shard_start": 6250,
+      "shard_end": 12500,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.260610561
+    },
+    {
+      "rank": 2,
+      "shard_start": 12500,
+      "shard_end": 18750,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.26056673900000005
+    },
+    {
+      "rank": 3,
+      "shard_start": 18750,
+      "shard_end": 25000,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.26061414299999996
+    },
+    {
+      "rank": 4,
+      "shard_start": 25000,
+      "shard_end": 31250,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.259218414
+    },
+    {
+      "rank": 5,
+      "shard_start": 31250,
+      "shard_end": 37500,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.22744471600000005
+    },
+    {
+      "rank": 6,
+      "shard_start": 37500,
+      "shard_end": 43750,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.22312721999999996
+    },
+    {
+      "rank": 7,
+      "shard_start": 43750,
+      "shard_end": 50000,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.2599534210000001
+    },
+    {
+      "rank": 8,
+      "shard_start": 50000,
+      "shard_end": 56250,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.259977539
+    },
+    {
+      "rank": 9,
+      "shard_start": 56250,
+      "shard_end": 62500,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.26018267799999995
+    },
+    {
+      "rank": 10,
+      "shard_start": 62500,
+      "shard_end": 68750,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.22165064700000003
+    },
+    {
+      "rank": 11,
+      "shard_start": 68750,
+      "shard_end": 75000,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.26013274799999997
+    },
+    {
+      "rank": 12,
+      "shard_start": 75000,
+      "shard_end": 81250,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.25049245899999995
+    },
+    {
+      "rank": 13,
+      "shard_start": 81250,
+      "shard_end": 87500,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.25401246
+    },
+    {
+      "rank": 14,
+      "shard_start": 87500,
+      "shard_end": 93750,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.26035148399999997
+    },
+    {
+      "rank": 15,
+      "shard_start": 93750,
+      "shard_end": 100000,
+      "num_local_vectors": 6250,
+      "load_time_sec": 0.260057023
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 0.12120260400000005,
+  "initial_index_build_time_sec_mean": 0.116275698375,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 0.10101406600000007
+    },
+    {
+      "rank": 1,
+      "index_build_time_sec": 0.12072714799999995
+    },
+    {
+      "rank": 2,
+      "index_build_time_sec": 0.12036252700000005
+    },
+    {
+      "rank": 3,
+      "index_build_time_sec": 0.12000442900000008
+    },
+    {
+      "rank": 4,
+      "index_build_time_sec": 0.12045165699999993
+    },
+    {
+      "rank": 5,
+      "index_build_time_sec": 0.11927243399999998
+    },
+    {
+      "rank": 6,
+      "index_build_time_sec": 0.12078209900000003
+    },
+    {
+      "rank": 7,
+      "index_build_time_sec": 0.12070686900000005
+    },
+    {
+      "rank": 8,
+      "index_build_time_sec": 0.1007140299999999
+    },
+    {
+      "rank": 9,
+      "index_build_time_sec": 0.12066025599999985
+    },
+    {
+      "rank": 10,
+      "index_build_time_sec": 0.12054566599999994
+    },
+    {
+      "rank": 11,
+      "index_build_time_sec": 0.12087675500000006
+    },
+    {
+      "rank": 12,
+      "index_build_time_sec": 0.10127374600000005
+    },
+    {
+      "rank": 13,
+      "index_build_time_sec": 0.12099165700000003
+    },
+    {
+      "rank": 14,
+      "index_build_time_sec": 0.11082523099999997
+    },
+    {
+      "rank": 15,
+      "index_build_time_sec": 0.12120260400000005
+    }
+  ],
+  "dataset_metadata": {
+    "name": "benchmark_calibrate_2560d",
+    "num_vectors": 100000,
+    "num_queries": 100,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false,
+    "vectors_shape": [
+      100000,
+      2560
+    ],
+    "queries_shape": [
+      100,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 5,
+      "mean": 0.05272244919999989,
+      "median": 0.05590086499999991,
+      "min": 0.042542655999999957,
+      "max": 0.0642843839999998,
+      "std": 0.00959054770059269
+    },
+    "merge_time_sec": {
+      "count": 5,
+      "mean": 0.0005128130000000119,
+      "median": 0.0004886159999999418,
+      "min": 0.0004580480000000442,
+      "max": 0.0006619850000000316,
+      "std": 8.457094613104669e-05
+    },
+    "max_local_search_time_sec": {
+      "count": 5,
+      "mean": 0.05119501679999998,
+      "median": 0.05477380799999998,
+      "min": 0.041580210000000006,
+      "max": 0.061596975999999914,
+      "std": 0.008979772131721865
+    },
+    "mean_local_search_time_sec": {
+      "count": 5,
+      "mean": 0.0450422227375,
+      "median": 0.04338700324999997,
+      "min": 0.04096533200000001,
+      "max": 0.055882026187499975,
+      "std": 0.006197649906429208
+    },
+    "max_communication_time_sec": {
+      "count": 5,
+      "mean": 0.010337726599999986,
+      "median": 0.007850021999999957,
+      "min": 0.0037248370000000364,
+      "max": 0.019459005000000085,
+      "std": 0.007286746830368203
+    },
+    "mean_communication_time_sec": {
+      "count": 5,
+      "mean": 0.0016447803874999945,
+      "median": 0.001244521999999998,
+      "min": 0.0003713180624999868,
+      "max": 0.004192160250000007,
+      "std": 0.0015537533557887348
+    },
+    "throughput_queries_per_sec": {
+      "count": 5,
+      "mean": 1949.534657354683,
+      "median": 1788.8810843982496,
+      "min": 1555.5877458513144,
+      "max": 2350.5819664855926,
+      "std": 364.4554838769396
+    }
+  }
+}

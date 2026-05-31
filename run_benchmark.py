@@ -7,9 +7,14 @@ from mpi4py import MPI
 from dense_retrieval.config import load_config
 from dense_retrieval.data.loading import load_dataset_shard
 from dense_retrieval.paths import get_dataset_dir
-from dense_retrieval.results import get_run_dir, write_json
+from dense_retrieval.results import (
+    collect_runtime_metadata,
+    get_benchmark_run_dir,
+    write_json,
+)
 from dense_retrieval.retrieval.mpi_centralized import run_mpi_centralized_retrieval
 from dense_retrieval.retrieval.mpi_tree import run_mpi_tree_retrieval
+from dense_retrieval.search.local_index import LocalSearchIndex
 
 
 def parse_args() -> argparse.Namespace:
@@ -34,6 +39,7 @@ def run_selected_retrieval(
     num_global_vectors: int,
     search_backend: str,
     faiss_num_threads: int | None,
+    search_index: LocalSearchIndex | None = None,
 ):
     if mode == "mpi_centralized":
         return run_mpi_centralized_retrieval(
@@ -46,6 +52,7 @@ def run_selected_retrieval(
             load_time_sec=None,
             search_backend=search_backend,
             faiss_num_threads=faiss_num_threads,
+            search_index=search_index,
         )
 
     if mode == "mpi_tree":
@@ -59,6 +66,7 @@ def run_selected_retrieval(
             load_time_sec=None,
             search_backend=search_backend,
             faiss_num_threads=faiss_num_threads,
+            search_index=search_index,
         )
 
     raise ValueError(f"Unknown retrieval mode: {mode}")
@@ -163,6 +171,21 @@ def build_benchmark_summary(
     )
 
     lines.append("")
+    lines.append("Initial local index construction:")
+    lines.append(
+        f"  Index build max:    "
+        f"{benchmark_metrics['initial_index_build_time_sec_max']:.6f} s"
+    )
+    lines.append(
+        f"  Index build mean:   "
+        f"{benchmark_metrics['initial_index_build_time_sec_mean']:.6f} s"
+    )
+    lines.append(
+        f"  Index reuse:        "
+        f"{benchmark_metrics['search_index_reuse']}"
+    )
+
+    lines.append("")
     lines.append("Measured retrieval timings:")
     for metric_name, label in [
         ("mpi_total_time_sec", "MPI retrieval time"),
@@ -183,9 +206,8 @@ def build_benchmark_summary(
         lines.append("")
         lines.append("Note:")
         lines.append(
-            "  The current FAISS backend builds a local IndexFlatIP inside each "
-            "retrieval call. Therefore, FAISS timings currently include local "
-            "index construction plus search."
+            "  In benchmark mode, the local search index is built once per rank "
+            "and reused across warmup and measured retrieval runs."
         )
 
     return "\n".join(lines)
@@ -196,8 +218,17 @@ def save_benchmark_outputs(
     benchmark_metrics: dict[str, Any],
     measured_runs: list[dict[str, Any]],
 ) -> dict[str, str]:
-    run_dir = get_run_dir(config)
+    run_dir = get_benchmark_run_dir(
+        config=config,
+        world_size=benchmark_metrics["world_size"],
+    )
     run_dir.mkdir(parents=True, exist_ok=True)
+
+    benchmark_metrics["output"] = {
+        "run_dir": str(run_dir),
+        "experiment_dir": str(run_dir.parent),
+        "unique_run_name": run_dir.name,
+    }
 
     summary_path = run_dir / "benchmark_summary.txt"
     metrics_path = run_dir / "benchmark_metrics.json"
@@ -296,6 +327,30 @@ def main() -> None:
         print(f"Queries: {queries.shape[0]}")
         print(f"Dimension: {queries.shape[1]}")
 
+    if rank == 0:
+        print("Building reusable local search index on each rank.")
+
+    index_build_start = MPI.Wtime()
+
+    local_search_index = LocalSearchIndex(
+        vectors=local_vectors,
+        backend=search_backend,
+        faiss_num_threads=faiss_num_threads,
+    )
+
+    index_build_end = MPI.Wtime()
+    index_build_time_sec = index_build_end - index_build_start
+
+    index_build_info = {
+        "rank": rank,
+        "index_build_time_sec": index_build_time_sec,
+    }
+
+    gathered_index_build_info = comm.gather(index_build_info, root=0)
+
+    if rank == 0:
+        print("Reusable local search index built.")
+
     for warmup_index in range(warmup_runs):
         if rank == 0:
             print(f"Warmup run {warmup_index + 1}/{warmup_runs}")
@@ -310,6 +365,7 @@ def main() -> None:
             num_global_vectors=num_global_vectors,
             search_backend=search_backend,
             faiss_num_threads=faiss_num_threads,
+            search_index=local_search_index,
         )
 
     measured_runs: list[dict[str, Any]] = []
@@ -328,6 +384,7 @@ def main() -> None:
             num_global_vectors=num_global_vectors,
             search_backend=search_backend,
             faiss_num_threads=faiss_num_threads,
+            search_index=local_search_index,
         )
 
         if rank == 0:
@@ -341,6 +398,11 @@ def main() -> None:
         load_times = [
             info["load_time_sec"]
             for info in gathered_load_info
+        ]
+
+        index_build_times = [
+            info["index_build_time_sec"]
+            for info in gathered_index_build_info
         ]
 
         timing_summary = {
@@ -374,6 +436,7 @@ def main() -> None:
         benchmark_metrics = {
             "benchmark_mode": "hot_repeated_retrieval",
             "run_id": config["project"]["run_id"],
+            "runtime_metadata": collect_runtime_metadata(args.config),
             "retrieval_mode": retrieval_mode,
             "search_backend": search_backend,
             "faiss_num_threads": faiss_num_threads,
@@ -390,6 +453,10 @@ def main() -> None:
             "initial_load_time_sec_max": max(load_times),
             "initial_load_time_sec_mean": statistics.mean(load_times),
             "rank_load_info": gathered_load_info,
+            "search_index_reuse": True,
+            "initial_index_build_time_sec_max": max(index_build_times),
+            "initial_index_build_time_sec_mean": statistics.mean(index_build_times),
+            "rank_index_build_info": gathered_index_build_info,
             "dataset_metadata": metadata,
             "timing_summary": timing_summary,
         }

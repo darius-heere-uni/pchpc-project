@@ -6,6 +6,11 @@ import numpy as np
 
 from dense_retrieval.paths import get_results_root
 
+import os
+import socket
+from datetime import datetime
+from uuid import uuid4
+
 
 def get_run_dir(config: dict[str, Any]) -> Path:
     """
@@ -13,6 +18,98 @@ def get_run_dir(config: dict[str, Any]) -> Path:
     """
     run_id = config["project"]["run_id"]
     return get_results_root(config) / run_id
+
+
+def _sanitize_token(value: Any) -> str:
+    """
+    Convert a value into a short filesystem-friendly token.
+    """
+    text = str(value)
+    text = text.replace("mpi_", "")
+    text = text.replace("/", "-")
+    text = text.replace(" ", "-")
+    text = text.replace("_", "-")
+    return text
+
+
+def build_unique_benchmark_run_name(
+    config: dict[str, Any],
+    world_size: int,
+) -> str:
+    """
+    Build a local- and cluster-friendly unique run folder name.
+
+    The name deliberately does not depend on Slurm. Slurm metadata is stored
+    in benchmark_metrics.json instead.
+    """
+    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+
+    search_backend = _sanitize_token(
+        config.get("search", {}).get("backend", "unknown")
+    )
+    retrieval_mode = _sanitize_token(
+        config.get("retrieval", {}).get("mode", "unknown")
+    )
+
+    short_id = uuid4().hex[:8]
+
+    return f"{timestamp}_{search_backend}_{retrieval_mode}_{world_size:03d}r_{short_id}"
+
+
+def get_benchmark_run_dir(
+    config: dict[str, Any],
+    world_size: int,
+) -> Path:
+    """
+    Return a unique result directory for one benchmark run.
+
+    Output structure:
+
+        results/<run_id>/<unique_run_name>/
+    """
+    experiment_id = config["project"]["run_id"]
+    unique_run_name = build_unique_benchmark_run_name(
+        config=config,
+        world_size=world_size,
+    )
+    return get_results_root(config) / experiment_id / unique_run_name
+
+
+def collect_runtime_metadata(
+    config_path: str,
+) -> dict[str, Any]:
+    """
+    Collect runtime metadata useful for later benchmark analysis.
+
+    This works both locally and inside Slurm jobs. Slurm fields are included
+    when present and set to None otherwise.
+    """
+    slurm_keys = [
+        "SLURM_JOB_ID",
+        "SLURM_JOB_NAME",
+        "SLURM_SUBMIT_DIR",
+        "SLURM_JOB_NODELIST",
+        "SLURM_JOB_NUM_NODES",
+        "SLURM_NTASKS",
+        "SLURM_NTASKS_PER_NODE",
+        "SLURM_CPUS_PER_TASK",
+        "SLURM_MEM_PER_NODE",
+        "SLURM_MEM_PER_CPU",
+        "SLURM_JOB_PARTITION",
+        "SLURM_CLUSTER_NAME",
+    ]
+
+    return {
+        "created_at": datetime.now().isoformat(timespec="seconds"),
+        "hostname": socket.gethostname(),
+        "pid": os.getpid(),
+        "cwd": os.getcwd(),
+        "config_path": config_path,
+        "slurm": {
+            key: os.environ.get(key)
+            for key in slurm_keys
+        },
+    }
 
 
 def make_json_serializable(value: Any) -> Any:

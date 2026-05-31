@@ -1,0 +1,149 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "scorep_comm_stress_tree",
+  "runtime_metadata": {
+    "created_at": "2026-05-30T12:36:23",
+    "hostname": "c0075",
+    "pid": 2929397,
+    "cwd": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+    "config_path": "configs/cluster_scorep_comm_stress_tree.json",
+    "slurm": {
+      "SLURM_JOB_ID": "14014912",
+      "SLURM_JOB_NAME": "pchpc-scorep",
+      "SLURM_SUBMIT_DIR": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+      "SLURM_JOB_NODELIST": "c0075",
+      "SLURM_JOB_NUM_NODES": "1",
+      "SLURM_NTASKS": "2",
+      "SLURM_NTASKS_PER_NODE": "2",
+      "SLURM_CPUS_PER_TASK": "1",
+      "SLURM_MEM_PER_NODE": "8192",
+      "SLURM_MEM_PER_CPU": null,
+      "SLURM_JOB_PARTITION": "scc-cpu",
+      "SLURM_CLUSTER_NAME": "emmy"
+    }
+  },
+  "retrieval_mode": "mpi_tree",
+  "search_backend": "numpy",
+  "faiss_num_threads": null,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_queries_on_each_rank",
+  "world_size": 2,
+  "num_vectors": 100000,
+  "num_queries": 100,
+  "dimension": 2560,
+  "top_k": 1000,
+  "warmup_runs": 0,
+  "measurement_runs": 1,
+  "initial_load_time_sec_max": 3.478895391,
+  "initial_load_time_sec_mean": 3.456272382,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 50000,
+      "num_local_vectors": 50000,
+      "load_time_sec": 3.4336493729999997
+    },
+    {
+      "rank": 1,
+      "shard_start": 50000,
+      "shard_end": 100000,
+      "num_local_vectors": 50000,
+      "load_time_sec": 3.478895391
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 7.752000000138537e-06,
+  "initial_index_build_time_sec_mean": 7.2880000001607215e-06,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 6.824000000182906e-06
+    },
+    {
+      "rank": 1,
+      "index_build_time_sec": 7.752000000138537e-06
+    }
+  ],
+  "dataset_metadata": {
+    "name": "benchmark_calibrate_2560d",
+    "num_vectors": 100000,
+    "num_queries": 100,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false,
+    "vectors_shape": [
+      100000,
+      2560
+    ],
+    "queries_shape": [
+      100,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 1,
+      "mean": 0.34179885899999984,
+      "median": 0.34179885899999984,
+      "min": 0.34179885899999984,
+      "max": 0.34179885899999984,
+      "std": 0.0
+    },
+    "merge_time_sec": {
+      "count": 1,
+      "mean": 0.007936462999999616,
+      "median": 0.007936462999999616,
+      "min": 0.007936462999999616,
+      "max": 0.007936462999999616,
+      "std": 0.0
+    },
+    "max_local_search_time_sec": {
+      "count": 1,
+      "mean": 0.3337074549999999,
+      "median": 0.3337074549999999,
+      "min": 0.3337074549999999,
+      "max": 0.3337074549999999,
+      "std": 0.0
+    },
+    "mean_local_search_time_sec": {
+      "count": 1,
+      "mean": 0.33356504349999994,
+      "median": 0.33356504349999994,
+      "min": 0.33356504349999994,
+      "max": 0.33356504349999994,
+      "std": 0.0
+    },
+    "max_communication_time_sec": {
+      "count": 1,
+      "mean": 0.0008722759999999496,
+      "median": 0.0008722759999999496,
+      "min": 0.0008722759999999496,
+      "max": 0.0008722759999999496,
+      "std": 0.0
+    },
+    "mean_communication_time_sec": {
+      "count": 1,
+      "mean": 0.0008098704999999207,
+      "median": 0.0008098704999999207,
+      "min": 0.0008098704999999207,
+      "max": 0.0008098704999999207,
+      "std": 0.0
+    },
+    "throughput_queries_per_sec": {
+      "count": 1,
+      "mean": 292.5697303161566,
+      "median": 292.5697303161566,
+      "min": 292.5697303161566,
+      "max": 292.5697303161566,
+      "std": 0.0
+    }
+  },
+  "output": {
+    "run_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/scorep_comm_stress_tree/20260530-123623_numpy_tree_002r_2b3642c0",
+    "experiment_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/scorep_comm_stress_tree",
+    "unique_run_name": "20260530-123623_numpy_tree_002r_2b3642c0"
+  }
+}
