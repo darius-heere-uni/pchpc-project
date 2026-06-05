@@ -78,6 +78,41 @@ echo "SCOREP_ENABLE_TRACING=$SCOREP_ENABLE_TRACING"
 echo "SCOREP_ENABLE_PROFILING=$SCOREP_ENABLE_PROFILING"
 
 echo
+echo "Writing Score-P run metadata."
+
+cat > "$SCOREP_EXPERIMENT_DIRECTORY/run_metadata.txt" <<EOF
+Score-P profiling run metadata
+==============================
+
+Created at: $(date)
+Job ID: ${SLURM_JOB_ID:-unset}
+Job name: ${SLURM_JOB_NAME:-unset}
+Partition: ${SLURM_JOB_PARTITION:-unset}
+Node list: ${SLURM_JOB_NODELIST:-unset}
+Number of nodes: ${SLURM_JOB_NUM_NODES:-unset}
+Number of tasks: ${SLURM_NTASKS:-unset}
+Tasks per node: ${SLURM_NTASKS_PER_NODE:-unset}
+CPUs per task: ${SLURM_CPUS_PER_TASK:-unset}
+Memory per node MB: ${SLURM_MEM_PER_NODE:-unset}
+
+Submit directory: ${SLURM_SUBMIT_DIR:-unset}
+Config path: $CONFIG_PATH
+Score-P directory: $SCOREP_EXPERIMENT_DIRECTORY
+
+Python: $(which python)
+MPI executable: $(which mpiexec)
+Score-P executable: $(which scorep)
+
+MPI library:
+$(python -c "from mpi4py import MPI; print(MPI.Get_library_version())")
+
+Command:
+mpiexec -n ${SLURM_NTASKS:-unset} python -m scorep --mpp=mpi --noinstrumenter run_benchmark.py --config $CONFIG_PATH
+EOF
+
+cp "$CONFIG_PATH" "$SCOREP_EXPERIMENT_DIRECTORY/config_used.json"
+
+echo
 echo "Running Score-P trace."
 mpiexec -n "$SLURM_NTASKS" python -m scorep --mpp=mpi --noinstrumenter run_benchmark.py --config "$CONFIG_PATH"
 

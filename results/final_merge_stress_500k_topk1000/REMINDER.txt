@@ -1,0 +1,17 @@
+Reminder about these benchmark results
+======================================
+
+The config_used.json files for this experiment may state num_queries = 100,
+but the existing dataset directory benchmark_500k_2560d contained queries.npy
+with only one query when these jobs were run.
+
+Therefore, the actual benchmark results should be interpreted as:
+
+  single-query top-k merge/latency stress
+
+not as:
+
+  100-query batched merge stress
+
+The CSV export correctly reports the actual loaded dataset metadata with
+num_queries = 1. Use the CSV values as the source of truth for analysis.
