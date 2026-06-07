@@ -9,6 +9,7 @@ from dense_retrieval.paths import get_dataset_dir
 from dense_retrieval.results import format_result_summary, save_run_outputs
 from dense_retrieval.retrieval.mpi_centralized import run_mpi_centralized_retrieval
 from dense_retrieval.retrieval.mpi_tree import run_mpi_tree_retrieval
+from dense_retrieval.retrieval.mpi_tree_explicit import run_mpi_tree_explicit_retrieval
 
 
 def parse_args() -> argparse.Namespace:
@@ -50,6 +51,19 @@ def run_selected_retrieval(
 
     if mode == "mpi_tree":
         return run_mpi_tree_retrieval(
+            local_vectors=local_vectors,
+            queries=queries,
+            top_k=top_k,
+            comm=comm,
+            shard_start_idx=shard_start_idx,
+            num_global_vectors=num_global_vectors,
+            load_time_sec=load_time_sec,
+            search_backend=search_backend,
+            faiss_num_threads=faiss_num_threads,
+        )
+
+    if mode == "mpi_tree_explicit":
+        return run_mpi_tree_explicit_retrieval(
             local_vectors=local_vectors,
             queries=queries,
             top_k=top_k,

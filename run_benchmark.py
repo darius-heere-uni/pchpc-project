@@ -14,6 +14,7 @@ from dense_retrieval.results import (
 )
 from dense_retrieval.retrieval.mpi_centralized import run_mpi_centralized_retrieval
 from dense_retrieval.retrieval.mpi_tree import run_mpi_tree_retrieval
+from dense_retrieval.retrieval.mpi_tree_explicit import run_mpi_tree_explicit_retrieval
 from dense_retrieval.search.local_index import LocalSearchIndex
 
 
@@ -57,6 +58,20 @@ def run_selected_retrieval(
 
     if mode == "mpi_tree":
         return run_mpi_tree_retrieval(
+            local_vectors=local_vectors,
+            queries=queries,
+            top_k=top_k,
+            comm=comm,
+            shard_start_idx=shard_start_idx,
+            num_global_vectors=num_global_vectors,
+            load_time_sec=None,
+            search_backend=search_backend,
+            faiss_num_threads=faiss_num_threads,
+            search_index=search_index,
+        )
+
+    if mode == "mpi_tree_explicit":
+        return run_mpi_tree_explicit_retrieval(
             local_vectors=local_vectors,
             queries=queries,
             top_k=top_k,
