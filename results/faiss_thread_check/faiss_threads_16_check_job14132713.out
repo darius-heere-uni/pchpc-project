@@ -1,0 +1,32 @@
+================================================================================
+JobID = 14132713
+User = u27936, Account = scc_umin_kunkel_pchpc2026
+Partition = scc-cpu, Nodelist = c0125
+================================================================================
+Slurm allocation:
+  SLURM_JOB_ID=14132713
+  SLURM_JOB_NODELIST=c0125
+  SLURM_NTASKS=1
+  SLURM_CPUS_PER_TASK=16
+
+Thread environment:
+  OMP_NUM_THREADS=16
+  OPENBLAS_NUM_THREADS=16
+  MKL_NUM_THREADS=16
+  NUMEXPR_NUM_THREADS=16
+  OMP_PROC_BIND=close
+  OMP_PLACES=cores
+
+Python / FAISS thread check:
+python pid: 1954612
+faiss.omp_get_max_threads(): 16
+after faiss.omp_set_num_threads:
+faiss.omp_get_max_threads(): 16
+============ Job Information ===================================================
+Submitted: 2026-06-07T17:37:32
+Started: 2026-06-07T17:37:46
+Ended: 2026-06-07T17:37:56
+Elapsed: 1 min, Limit: 1 min, Difference: 0 min
+CPUs: 16, Nodes: 1
+Estimated credit Consumption: 0.27 core-hours
+================================================================================
