@@ -1,0 +1,31 @@
+{
+  "project": {
+    "name": "pchpc-project",
+    "run_id": "scorep_merge_trace_500k_topk5000_tree_explicit"
+  },
+  "paths": {
+    "data_root": "$PROJECT_DIR/darius/pchpc-project/data",
+    "results_root": "results"
+  },
+  "dataset": {
+    "name": "benchmark_500k_2560d",
+    "num_vectors": 500000,
+    "num_queries": 1,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false
+  },
+  "search": {
+    "backend": "numpy",
+    "top_k": 5000,
+    "similarity": "dot"
+  },
+  "retrieval": {
+    "mode": "mpi_tree_explicit"
+  },
+  "benchmark": {
+    "warmup_runs": 0,
+    "measurement_runs": 1
+  }
+}

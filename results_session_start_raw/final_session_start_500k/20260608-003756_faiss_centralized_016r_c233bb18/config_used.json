@@ -1,0 +1,32 @@
+{
+  "project": {
+    "name": "pchpc-project",
+    "run_id": "final_session_start_500k"
+  },
+  "paths": {
+    "data_root": "$PROJECT_DIR/darius/pchpc-project/data",
+    "results_root": "results_session_start_raw"
+  },
+  "dataset": {
+    "name": "benchmark_500k_2560d",
+    "num_vectors": 500000,
+    "num_queries": 1,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false
+  },
+  "search": {
+    "backend": "faiss",
+    "top_k": 10,
+    "similarity": "dot",
+    "faiss_num_threads": 1
+  },
+  "retrieval": {
+    "mode": "mpi_centralized"
+  },
+  "benchmark": {
+    "warmup_runs": 0,
+    "measurement_runs": 1
+  }
+}

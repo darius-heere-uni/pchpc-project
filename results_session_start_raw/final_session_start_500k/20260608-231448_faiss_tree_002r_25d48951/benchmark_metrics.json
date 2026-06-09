@@ -1,0 +1,149 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "final_session_start_500k",
+  "runtime_metadata": {
+    "created_at": "2026-06-08T23:14:48",
+    "hostname": "c0413",
+    "pid": 2021951,
+    "cwd": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+    "config_path": "configs/session_start_configs/final_session_start_500k_02r_tree.json",
+    "slurm": {
+      "SLURM_JOB_ID": "14170522",
+      "SLURM_JOB_NAME": "pchpc-bench",
+      "SLURM_SUBMIT_DIR": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+      "SLURM_JOB_NODELIST": "c0413",
+      "SLURM_JOB_NUM_NODES": "1",
+      "SLURM_NTASKS": "2",
+      "SLURM_NTASKS_PER_NODE": "2",
+      "SLURM_CPUS_PER_TASK": "1",
+      "SLURM_MEM_PER_NODE": "32768",
+      "SLURM_MEM_PER_CPU": null,
+      "SLURM_JOB_PARTITION": "scc-cpu",
+      "SLURM_CLUSTER_NAME": "emmy"
+    }
+  },
+  "retrieval_mode": "mpi_tree",
+  "search_backend": "faiss",
+  "faiss_num_threads": 1,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_queries_on_each_rank",
+  "world_size": 2,
+  "num_vectors": 500000,
+  "num_queries": 1,
+  "dimension": 2560,
+  "top_k": 10,
+  "warmup_runs": 0,
+  "measurement_runs": 1,
+  "initial_load_time_sec_max": 1.56014058,
+  "initial_load_time_sec_mean": 1.555428099,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 250000,
+      "num_local_vectors": 250000,
+      "load_time_sec": 1.56014058
+    },
+    {
+      "rank": 1,
+      "shard_start": 250000,
+      "shard_end": 500000,
+      "num_local_vectors": 250000,
+      "load_time_sec": 1.550715618
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 0.684200642,
+  "initial_index_build_time_sec_mean": 0.6815509074999999,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 0.684200642
+    },
+    {
+      "rank": 1,
+      "index_build_time_sec": 0.6789011729999999
+    }
+  ],
+  "dataset_metadata": {
+    "name": "benchmark_500k_2560d",
+    "num_vectors": 500000,
+    "num_queries": 1,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false,
+    "vectors_shape": [
+      500000,
+      2560
+    ],
+    "queries_shape": [
+      1,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 1,
+      "mean": 0.26904425200000004,
+      "median": 0.26904425200000004,
+      "min": 0.26904425200000004,
+      "max": 0.26904425200000004,
+      "std": 0.0
+    },
+    "merge_time_sec": {
+      "count": 1,
+      "mean": 0.0003674020000001832,
+      "median": 0.0003674020000001832,
+      "min": 0.0003674020000001832,
+      "max": 0.0003674020000001832,
+      "std": 0.0
+    },
+    "max_local_search_time_sec": {
+      "count": 1,
+      "mean": 0.26860392499999985,
+      "median": 0.26860392499999985,
+      "min": 0.26860392499999985,
+      "max": 0.26860392499999985,
+      "std": 0.0
+    },
+    "mean_local_search_time_sec": {
+      "count": 1,
+      "mean": 0.26831915399999984,
+      "median": 0.26831915399999984,
+      "min": 0.26831915399999984,
+      "max": 0.26831915399999984,
+      "std": 0.0
+    },
+    "max_communication_time_sec": {
+      "count": 1,
+      "mean": 0.00013865399999968275,
+      "median": 0.00013865399999968275,
+      "min": 0.00013865399999968275,
+      "max": 0.00013865399999968275,
+      "std": 0.0
+    },
+    "mean_communication_time_sec": {
+      "count": 1,
+      "mean": 0.00013674899999971402,
+      "median": 0.00013674899999971402,
+      "min": 0.00013674899999971402,
+      "max": 0.00013674899999971402,
+      "std": 0.0
+    },
+    "throughput_queries_per_sec": {
+      "count": 1,
+      "mean": 3.716860674652138,
+      "median": 3.716860674652138,
+      "min": 3.716860674652138,
+      "max": 3.716860674652138,
+      "std": 0.0
+    }
+  },
+  "output": {
+    "run_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_session_start_500k/20260608-231448_faiss_tree_002r_25d48951",
+    "experiment_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_session_start_500k",
+    "unique_run_name": "20260608-231448_faiss_tree_002r_25d48951"
+  }
+}
