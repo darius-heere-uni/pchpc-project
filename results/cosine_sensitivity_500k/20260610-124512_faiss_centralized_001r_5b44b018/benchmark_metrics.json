@@ -1,0 +1,138 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "cosine_sensitivity_500k",
+  "runtime_metadata": {
+    "created_at": "2026-06-10T12:45:12",
+    "hostname": "c0123",
+    "pid": 612065,
+    "cwd": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+    "config_path": "configs/cosine_sensitivity_configs/cosine_sensitivity_500k_centralized.json",
+    "slurm": {
+      "SLURM_JOB_ID": "14211181",
+      "SLURM_JOB_NAME": "pchpc-bench",
+      "SLURM_SUBMIT_DIR": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+      "SLURM_JOB_NODELIST": "c0123",
+      "SLURM_JOB_NUM_NODES": "1",
+      "SLURM_NTASKS": "1",
+      "SLURM_NTASKS_PER_NODE": "1",
+      "SLURM_CPUS_PER_TASK": "1",
+      "SLURM_MEM_PER_NODE": "32768",
+      "SLURM_MEM_PER_CPU": null,
+      "SLURM_JOB_PARTITION": "scc-cpu",
+      "SLURM_CLUSTER_NAME": "emmy"
+    }
+  },
+  "retrieval_mode": "mpi_centralized",
+  "search_backend": "faiss",
+  "faiss_num_threads": 1,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_queries_on_each_rank",
+  "world_size": 1,
+  "num_vectors": 500000,
+  "num_queries": 1,
+  "dimension": 2560,
+  "top_k": 10,
+  "warmup_runs": 5,
+  "measurement_runs": 50,
+  "initial_load_time_sec_max": 54.524237981,
+  "initial_load_time_sec_mean": 54.524237981,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 500000,
+      "num_local_vectors": 500000,
+      "load_time_sec": 54.524237981
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 1.3021999400000013,
+  "initial_index_build_time_sec_mean": 1.3021999400000013,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 1.3021999400000013
+    }
+  ],
+  "dataset_metadata": {
+    "name": "benchmark_500k_2560d_normalized",
+    "num_vectors": 500000,
+    "num_queries": 1,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": true,
+    "vectors_shape": [
+      500000,
+      2560
+    ],
+    "queries_shape": [
+      1,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 50,
+      "mean": 0.48594466009999965,
+      "median": 0.4857500155000025,
+      "min": 0.48356697899999546,
+      "max": 0.48879440799998974,
+      "std": 0.0011332081491026748
+    },
+    "merge_time_sec": {
+      "count": 50,
+      "mean": 0.0001327464400004885,
+      "median": 0.00011972699999773795,
+      "min": 0.00011120599999969727,
+      "max": 0.00041465599999668257,
+      "std": 4.8244002127136386e-05
+    },
+    "max_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.48561541090000004,
+      "median": 0.4854307920000025,
+      "min": 0.4832702830000031,
+      "max": 0.4884852550000005,
+      "std": 0.0011329752554180609
+    },
+    "mean_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.48561541090000004,
+      "median": 0.4854307920000025,
+      "min": 0.4832702830000031,
+      "max": 0.4884852550000005,
+      "std": 0.0011329752554180609
+    },
+    "max_communication_time_sec": {
+      "count": 50,
+      "mean": 0.00016326583999955345,
+      "median": 0.00015031200000237277,
+      "min": 0.00013580699999238277,
+      "max": 0.00033488299999362425,
+      "std": 4.473116309676025e-05
+    },
+    "mean_communication_time_sec": {
+      "count": 50,
+      "mean": 0.00016326583999955345,
+      "median": 0.00015031200000237277,
+      "min": 0.00013580699999238277,
+      "max": 0.00033488299999362425,
+      "std": 4.473116309676025e-05
+    },
+    "throughput_queries_per_sec": {
+      "count": 50,
+      "mean": 2.0578584474562405,
+      "median": 2.0586720912649255,
+      "min": 2.0458499189704744,
+      "max": 2.0679658525649853,
+      "std": 0.004793872272537405
+    }
+  },
+  "output": {
+    "run_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/cosine_sensitivity_500k/20260610-124512_faiss_centralized_001r_5b44b018",
+    "experiment_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/cosine_sensitivity_500k",
+    "unique_run_name": "20260610-124512_faiss_centralized_001r_5b44b018"
+  }
+}

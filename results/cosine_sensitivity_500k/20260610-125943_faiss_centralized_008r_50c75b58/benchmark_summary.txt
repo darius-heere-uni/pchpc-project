@@ -1,0 +1,58 @@
+Benchmark finished.
+
+Benchmark setup:
+  Run ID:             cosine_sensitivity_500k
+  Retrieval mode:     mpi_centralized
+  Search backend:     faiss
+  MPI ranks:          8
+  Vectors:            500000
+  Queries:            1
+  Dimension:          2560
+  Top-k:              10
+  Warmup runs:        5
+  Measurement runs:   50
+  FAISS threads/rank: 1
+
+Initial loading:
+  Load time max:      1.203255 s
+  Load time mean:     1.198409 s
+
+Initial local index construction:
+  Index build max:    0.232638 s
+  Index build mean:   0.228374 s
+  Index reuse:        True
+
+Measured retrieval timings:
+  MPI retrieval time:
+    mean:   0.066097
+    median: 0.065978
+    min:    0.065441
+    max:    0.068408
+    std:    0.000492
+  Merge time:
+    mean:   0.000133
+    median: 0.000126
+    min:    0.000115
+    max:    0.000213
+    std:    0.000019
+  Max local search time:
+    mean:   0.065663
+    median: 0.065538
+    min:    0.065055
+    max:    0.068025
+    std:    0.000472
+  Max communication time:
+    mean:   0.001262
+    median: 0.001255
+    min:    0.001048
+    max:    0.001487
+    std:    0.000069
+  Throughput queries/sec:
+    mean:   15.130144
+    median: 15.156506
+    min:    14.618262
+    max:    15.281000
+    std:    0.110566
+
+Note:
+  In benchmark mode, the local search index is built once per rank and reused across warmup and measured retrieval runs.
