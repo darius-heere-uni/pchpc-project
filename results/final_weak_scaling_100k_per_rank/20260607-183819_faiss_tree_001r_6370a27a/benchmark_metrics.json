@@ -1,0 +1,138 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "final_weak_scaling_100k_per_rank",
+  "runtime_metadata": {
+    "created_at": "2026-06-07T18:38:19",
+    "hostname": "c0137",
+    "pid": 3628156,
+    "cwd": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+    "config_path": "configs/weak_scaling_configs/final_weak_scaling_100k_per_rank_01r_tree.json",
+    "slurm": {
+      "SLURM_JOB_ID": "14133705",
+      "SLURM_JOB_NAME": "pchpc-bench",
+      "SLURM_SUBMIT_DIR": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+      "SLURM_JOB_NODELIST": "c0137",
+      "SLURM_JOB_NUM_NODES": "1",
+      "SLURM_NTASKS": "1",
+      "SLURM_NTASKS_PER_NODE": "1",
+      "SLURM_CPUS_PER_TASK": "1",
+      "SLURM_MEM_PER_NODE": "8192",
+      "SLURM_MEM_PER_CPU": null,
+      "SLURM_JOB_PARTITION": "scc-cpu",
+      "SLURM_CLUSTER_NAME": "emmy"
+    }
+  },
+  "retrieval_mode": "mpi_tree",
+  "search_backend": "faiss",
+  "faiss_num_threads": 1,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_queries_on_each_rank",
+  "world_size": 1,
+  "num_vectors": 100000,
+  "num_queries": 1,
+  "dimension": 2560,
+  "top_k": 10,
+  "warmup_runs": 5,
+  "measurement_runs": 50,
+  "initial_load_time_sec_max": 0.6260088650000001,
+  "initial_load_time_sec_mean": 0.6260088650000001,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 100000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 0.6260088650000001
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 0.297118086,
+  "initial_index_build_time_sec_mean": 0.297118086,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 0.297118086
+    }
+  ],
+  "dataset_metadata": {
+    "name": "weak_100k_per_rank_01r_2560d",
+    "num_vectors": 100000,
+    "num_queries": 1,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false,
+    "vectors_shape": [
+      100000,
+      2560
+    ],
+    "queries_shape": [
+      1,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 50,
+      "mean": 0.10158558177999998,
+      "median": 0.10119921900000017,
+      "min": 0.10049592900000004,
+      "max": 0.1076509179999996,
+      "std": 0.001330099085347149
+    },
+    "merge_time_sec": {
+      "count": 50,
+      "mean": 7.660200000625395e-07,
+      "median": 7.740000000922009e-07,
+      "min": 4.0699999992455105e-07,
+      "max": 1.2100000001957767e-06,
+      "std": 1.9244914409357302e-07
+    },
+    "max_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.10151530614000008,
+      "median": 0.10114629650000051,
+      "min": 0.10043328800000051,
+      "max": 0.10759499699999964,
+      "std": 0.0013297707551619923
+    },
+    "mean_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.10151530614000008,
+      "median": 0.10114629650000051,
+      "min": 0.10043328800000051,
+      "max": 0.10759499699999964,
+      "std": 0.0013297707551619923
+    },
+    "max_communication_time_sec": {
+      "count": 50,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "std": 0.0
+    },
+    "mean_communication_time_sec": {
+      "count": 50,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "std": 0.0
+    },
+    "throughput_queries_per_sec": {
+      "count": 50,
+      "mean": 9.84550883977426,
+      "median": 9.881499184704705,
+      "min": 9.28928446295278,
+      "max": 9.950651831876689,
+      "std": 0.12410949607527212
+    }
+  },
+  "output": {
+    "run_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_weak_scaling_100k_per_rank/20260607-183819_faiss_tree_001r_6370a27a",
+    "experiment_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_weak_scaling_100k_per_rank",
+    "unique_run_name": "20260607-183819_faiss_tree_001r_6370a27a"
+  }
+}

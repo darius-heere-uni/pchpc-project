@@ -1,0 +1,38 @@
+[
+  {
+    "run_index": 0,
+    "mpi_total_time_sec": 0.2659275079999972,
+    "merge_time_sec": 0.01464327300000079,
+    "throughput_queries_per_sec": 3.7604233105512743,
+    "max_local_search_time_sec": 0.25118656599999767,
+    "mean_local_search_time_sec": 0.2506777239999991,
+    "max_communication_time_sec": 0.00014588700000217614,
+    "mean_communication_time_sec": 0.00014087150000108295,
+    "max_local_merge_time_sec": 0.014502396999997558,
+    "mean_local_merge_time_sec": 0.007251198499998779,
+    "rank_info": [
+      {
+        "rank": 0,
+        "world_size": 2,
+        "shard_start": 0,
+        "shard_end": 250000,
+        "num_local_vectors": 250000,
+        "load_time_sec": null,
+        "local_search_time_sec": 0.25118656599999767,
+        "communication_time_sec": 0.00013585599999998976,
+        "local_merge_time_sec": 0.014502396999997558
+      },
+      {
+        "rank": 1,
+        "world_size": 2,
+        "shard_start": 250000,
+        "shard_end": 500000,
+        "num_local_vectors": 250000,
+        "load_time_sec": null,
+        "local_search_time_sec": 0.25016888200000054,
+        "communication_time_sec": 0.00014588700000217614,
+        "local_merge_time_sec": 0.0
+      }
+    ]
+  }
+]

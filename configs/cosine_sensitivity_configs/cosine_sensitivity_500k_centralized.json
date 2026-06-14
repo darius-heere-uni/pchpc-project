@@ -1,0 +1,32 @@
+{
+  "project": {
+    "name": "pchpc-project",
+    "run_id": "cosine_sensitivity_500k"
+  },
+  "paths": {
+    "data_root": "$PROJECT_DIR/darius/pchpc-project/data",
+    "results_root": "results"
+  },
+  "dataset": {
+    "name": "benchmark_500k_2560d_normalized",
+    "num_vectors": 500000,
+    "num_queries": 1,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": true
+  },
+  "search": {
+    "backend": "faiss",
+    "top_k": 10,
+    "similarity": "dot",
+    "faiss_num_threads": 1
+  },
+  "retrieval": {
+    "mode": "mpi_centralized"
+  },
+  "benchmark": {
+    "warmup_runs": 5,
+    "measurement_runs": 50
+  }
+}

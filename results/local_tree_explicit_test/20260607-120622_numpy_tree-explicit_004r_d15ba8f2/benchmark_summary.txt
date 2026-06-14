@@ -1,0 +1,54 @@
+Benchmark finished.
+
+Benchmark setup:
+  Run ID:             local_tree_explicit_test
+  Retrieval mode:     mpi_tree_explicit
+  Search backend:     numpy
+  MPI ranks:          4
+  Vectors:            5000
+  Queries:            3
+  Dimension:          2560
+  Top-k:              10
+  Warmup runs:        1
+  Measurement runs:   5
+
+Initial loading:
+  Load time max:      0.008236 s
+  Load time mean:     0.008045 s
+
+Initial local index construction:
+  Index build max:    0.000006 s
+  Index build mean:   0.000006 s
+  Index reuse:        True
+
+Measured retrieval timings:
+  MPI retrieval time:
+    mean:   0.003510
+    median: 0.003488
+    min:    0.003203
+    max:    0.004083
+    std:    0.000348
+  Merge time:
+    mean:   0.000197
+    median: 0.000197
+    min:    0.000167
+    max:    0.000248
+    std:    0.000033
+  Max local search time:
+    mean:   0.003321
+    median: 0.003281
+    min:    0.003042
+    max:    0.003892
+    std:    0.000342
+  Max communication time:
+    mean:   0.000072
+    median: 0.000063
+    min:    0.000039
+    max:    0.000117
+    std:    0.000029
+  Throughput queries/sec:
+    mean:   861.037235
+    median: 860.171644
+    min:    734.745400
+    max:    936.507595
+    std:    79.357883

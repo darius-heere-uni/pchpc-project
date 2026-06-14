@@ -1,0 +1,58 @@
+Benchmark finished.
+
+Benchmark setup:
+  Run ID:             final_multinode_latency_500k
+  Retrieval mode:     mpi_centralized
+  Search backend:     faiss
+  MPI ranks:          16
+  Vectors:            500000
+  Queries:            1
+  Dimension:          2560
+  Top-k:              10
+  Warmup runs:        5
+  Measurement runs:   50
+  FAISS threads/rank: 1
+
+Initial loading:
+  Load time max:      7.045770 s
+  Load time mean:     5.441414 s
+
+Initial local index construction:
+  Index build max:    0.372318 s
+  Index build mean:   0.196136 s
+  Index reuse:        True
+
+Measured retrieval timings:
+  MPI retrieval time:
+    mean:   0.037566
+    median: 0.037590
+    min:    0.036761
+    max:    0.038315
+    std:    0.000306
+  Merge time:
+    mean:   0.000142
+    median: 0.000143
+    min:    0.000114
+    max:    0.000180
+    std:    0.000012
+  Max local search time:
+    mean:   0.037023
+    median: 0.037057
+    min:    0.036234
+    max:    0.037590
+    std:    0.000285
+  Max communication time:
+    mean:   0.003656
+    median: 0.003676
+    min:    0.002838
+    max:    0.004374
+    std:    0.000342
+  Throughput queries/sec:
+    mean:   26.621871
+    median: 26.603104
+    min:    26.099429
+    max:    27.202909
+    std:    0.216807
+
+Note:
+  In benchmark mode, the local search index is built once per rank and reused across warmup and measured retrieval runs.

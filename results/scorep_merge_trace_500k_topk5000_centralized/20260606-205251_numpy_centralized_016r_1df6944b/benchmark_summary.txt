@@ -1,0 +1,54 @@
+Benchmark finished.
+
+Benchmark setup:
+  Run ID:             scorep_merge_trace_500k_topk5000_centralized
+  Retrieval mode:     mpi_centralized
+  Search backend:     numpy
+  MPI ranks:          16
+  Vectors:            500000
+  Queries:            1
+  Dimension:          2560
+  Top-k:              5000
+  Warmup runs:        0
+  Measurement runs:   1
+
+Initial loading:
+  Load time max:      0.739014 s
+  Load time mean:     0.444545 s
+
+Initial local index construction:
+  Index build max:    0.000016 s
+  Index build mean:   0.000012 s
+  Index reuse:        True
+
+Measured retrieval timings:
+  MPI retrieval time:
+    mean:   0.075011
+    median: 0.075011
+    min:    0.075011
+    max:    0.075011
+    std:    0.000000
+  Merge time:
+    mean:   0.002000
+    median: 0.002000
+    min:    0.002000
+    max:    0.002000
+    std:    0.000000
+  Max local search time:
+    mean:   0.071262
+    median: 0.071262
+    min:    0.071262
+    max:    0.071262
+    std:    0.000000
+  Max communication time:
+    mean:   0.039417
+    median: 0.039417
+    min:    0.039417
+    max:    0.039417
+    std:    0.000000
+  Throughput queries/sec:
+    mean:   13.331385
+    median: 13.331385
+    min:    13.331385
+    max:    13.331385
+    std:    0.000000

@@ -1,0 +1,171 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "final_weak_scaling_100k_per_rank",
+  "runtime_metadata": {
+    "created_at": "2026-06-07T18:39:57",
+    "hostname": "c0075",
+    "pid": 1559196,
+    "cwd": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+    "config_path": "configs/weak_scaling_configs/final_weak_scaling_100k_per_rank_04r_tree.json",
+    "slurm": {
+      "SLURM_JOB_ID": "14133707",
+      "SLURM_JOB_NAME": "pchpc-bench",
+      "SLURM_SUBMIT_DIR": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+      "SLURM_JOB_NODELIST": "c0075",
+      "SLURM_JOB_NUM_NODES": "1",
+      "SLURM_NTASKS": "4",
+      "SLURM_NTASKS_PER_NODE": "4",
+      "SLURM_CPUS_PER_TASK": "1",
+      "SLURM_MEM_PER_NODE": "16384",
+      "SLURM_MEM_PER_CPU": null,
+      "SLURM_JOB_PARTITION": "scc-cpu",
+      "SLURM_CLUSTER_NAME": "emmy"
+    }
+  },
+  "retrieval_mode": "mpi_tree",
+  "search_backend": "faiss",
+  "faiss_num_threads": 1,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_queries_on_each_rank",
+  "world_size": 4,
+  "num_vectors": 400000,
+  "num_queries": 1,
+  "dimension": 2560,
+  "top_k": 10,
+  "warmup_runs": 5,
+  "measurement_runs": 50,
+  "initial_load_time_sec_max": 8.802478302,
+  "initial_load_time_sec_mean": 7.85084157875,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 100000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 7.388315836
+    },
+    {
+      "rank": 1,
+      "shard_start": 100000,
+      "shard_end": 200000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 7.627330853
+    },
+    {
+      "rank": 2,
+      "shard_start": 200000,
+      "shard_end": 300000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 8.802478302
+    },
+    {
+      "rank": 3,
+      "shard_start": 300000,
+      "shard_end": 400000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 7.585241324
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 0.4014860650000003,
+  "initial_index_build_time_sec_mean": 0.37180578624999994,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 0.4014860650000003
+    },
+    {
+      "rank": 1,
+      "index_build_time_sec": 0.30638460099999953
+    },
+    {
+      "rank": 2,
+      "index_build_time_sec": 0.38551052599999913
+    },
+    {
+      "rank": 3,
+      "index_build_time_sec": 0.3938419530000008
+    }
+  ],
+  "dataset_metadata": {
+    "name": "weak_100k_per_rank_04r_2560d",
+    "num_vectors": 400000,
+    "num_queries": 1,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false,
+    "vectors_shape": [
+      400000,
+      2560
+    ],
+    "queries_shape": [
+      1,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 50,
+      "mean": 0.1108247915799998,
+      "median": 0.10271652249999974,
+      "min": 0.10062412399999943,
+      "max": 0.1532101059999995,
+      "std": 0.01586610587677361
+    },
+    "merge_time_sec": {
+      "count": 50,
+      "mean": 0.006730030200000208,
+      "median": 0.0002664920000006177,
+      "min": 0.00022655900000145834,
+      "max": 0.050084080999999614,
+      "std": 0.014865023605706868
+    },
+    "max_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.11044248324000008,
+      "median": 0.10241322649999951,
+      "min": 0.10029164000000002,
+      "max": 0.15269724000000018,
+      "std": 0.015715867398115785
+    },
+    "mean_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.10336784010000008,
+      "median": 0.10138731025000025,
+      "min": 0.09927551275000024,
+      "max": 0.12060750150000032,
+      "std": 0.004496590776528303
+    },
+    "max_communication_time_sec": {
+      "count": 50,
+      "mean": 0.007332959200000175,
+      "median": 0.0010799260000000643,
+      "min": 0.0004942479999989757,
+      "max": 0.0514948170000018,
+      "std": 0.014720976932892692
+    },
+    "mean_communication_time_sec": {
+      "count": 50,
+      "mean": 0.0023506096149999945,
+      "median": 0.0003414313750000897,
+      "min": 0.00019945574999935545,
+      "max": 0.02539210250000057,
+      "std": 0.005224952290281425
+    },
+    "throughput_queries_per_sec": {
+      "count": 50,
+      "mean": 9.171790774793758,
+      "median": 9.735532454837301,
+      "min": 6.526984584163157,
+      "max": 9.937974714691734,
+      "std": 1.0627511948670905
+    }
+  },
+  "output": {
+    "run_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_weak_scaling_100k_per_rank/20260607-183957_faiss_tree_004r_a77c2273",
+    "experiment_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_weak_scaling_100k_per_rank",
+    "unique_run_name": "20260607-183957_faiss_tree_004r_a77c2273"
+  }
+}
