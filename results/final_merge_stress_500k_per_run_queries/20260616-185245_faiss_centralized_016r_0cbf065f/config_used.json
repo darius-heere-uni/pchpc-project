@@ -1,0 +1,33 @@
+{
+  "project": {
+    "name": "pchpc-project",
+    "run_id": "final_merge_stress_500k_per_run_queries"
+  },
+  "paths": {
+    "data_root": "$PROJECT_DIR/darius/pchpc-project/data",
+    "results_root": "results"
+  },
+  "dataset": {
+    "name": "benchmark_500k_2560d_55q",
+    "num_vectors": 500000,
+    "num_queries": 55,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false
+  },
+  "search": {
+    "backend": "faiss",
+    "top_k": 10,
+    "similarity": "dot",
+    "faiss_num_threads": 1
+  },
+  "retrieval": {
+    "mode": "mpi_centralized"
+  },
+  "benchmark": {
+    "warmup_runs": 5,
+    "measurement_runs": 50,
+    "query_policy": "per_run"
+  }
+}

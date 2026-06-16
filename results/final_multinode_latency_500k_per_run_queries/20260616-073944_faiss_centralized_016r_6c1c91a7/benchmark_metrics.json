@@ -1,0 +1,306 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "final_multinode_latency_500k_per_run_queries",
+  "runtime_metadata": {
+    "created_at": "2026-06-16T07:39:44",
+    "hostname": "c0001",
+    "pid": 3196941,
+    "cwd": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+    "config_path": "configs/final_multinode_latency_500k_per_run_centralized.json",
+    "slurm": {
+      "SLURM_JOB_ID": "14305801",
+      "SLURM_JOB_NAME": "pchpc-bench",
+      "SLURM_SUBMIT_DIR": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+      "SLURM_JOB_NODELIST": "c[0001,0084,0410-0411]",
+      "SLURM_JOB_NUM_NODES": "4",
+      "SLURM_NTASKS": "16",
+      "SLURM_NTASKS_PER_NODE": "4",
+      "SLURM_CPUS_PER_TASK": "1",
+      "SLURM_MEM_PER_NODE": "16384",
+      "SLURM_MEM_PER_CPU": null,
+      "SLURM_JOB_PARTITION": "scc-cpu",
+      "SLURM_CLUSTER_NAME": "emmy"
+    }
+  },
+  "retrieval_mode": "mpi_centralized",
+  "search_backend": "faiss",
+  "faiss_num_threads": 1,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_query_pool_on_each_rank",
+  "query_policy": "per_run",
+  "query_pool_size": 55,
+  "queries_per_retrieval": 1,
+  "world_size": 16,
+  "num_vectors": 500000,
+  "num_queries": 1,
+  "dimension": 2560,
+  "top_k": 10,
+  "warmup_runs": 5,
+  "measurement_runs": 50,
+  "initial_load_time_sec_max": 1.561058462,
+  "initial_load_time_sec_mean": 0.6247558114375,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 31250,
+      "num_local_vectors": 31250,
+      "load_time_sec": 0.34873370800000003
+    },
+    {
+      "rank": 1,
+      "shard_start": 31250,
+      "shard_end": 62500,
+      "num_local_vectors": 31250,
+      "load_time_sec": 0.34709590199999996
+    },
+    {
+      "rank": 2,
+      "shard_start": 62500,
+      "shard_end": 93750,
+      "num_local_vectors": 31250,
+      "load_time_sec": 0.3456960269999999
+    },
+    {
+      "rank": 3,
+      "shard_start": 93750,
+      "shard_end": 125000,
+      "num_local_vectors": 31250,
+      "load_time_sec": 0.34650969099999995
+    },
+    {
+      "rank": 4,
+      "shard_start": 125000,
+      "shard_end": 156250,
+      "num_local_vectors": 31250,
+      "load_time_sec": 0.4027620249999999
+    },
+    {
+      "rank": 5,
+      "shard_start": 156250,
+      "shard_end": 187500,
+      "num_local_vectors": 31250,
+      "load_time_sec": 0.37187409299999996
+    },
+    {
+      "rank": 6,
+      "shard_start": 187500,
+      "shard_end": 218750,
+      "num_local_vectors": 31250,
+      "load_time_sec": 0.36453754399999994
+    },
+    {
+      "rank": 7,
+      "shard_start": 218750,
+      "shard_end": 250000,
+      "num_local_vectors": 31250,
+      "load_time_sec": 0.33289928599999985
+    },
+    {
+      "rank": 8,
+      "shard_start": 250000,
+      "shard_end": 281250,
+      "num_local_vectors": 31250,
+      "load_time_sec": 1.3885779790000004
+    },
+    {
+      "rank": 9,
+      "shard_start": 281250,
+      "shard_end": 312500,
+      "num_local_vectors": 31250,
+      "load_time_sec": 1.561058462
+    },
+    {
+      "rank": 10,
+      "shard_start": 312500,
+      "shard_end": 343750,
+      "num_local_vectors": 31250,
+      "load_time_sec": 1.3885147020000002
+    },
+    {
+      "rank": 11,
+      "shard_start": 343750,
+      "shard_end": 375000,
+      "num_local_vectors": 31250,
+      "load_time_sec": 1.524933974
+    },
+    {
+      "rank": 12,
+      "shard_start": 375000,
+      "shard_end": 406250,
+      "num_local_vectors": 31250,
+      "load_time_sec": 0.32023689899999996
+    },
+    {
+      "rank": 13,
+      "shard_start": 406250,
+      "shard_end": 437500,
+      "num_local_vectors": 31250,
+      "load_time_sec": 0.31843905299999986
+    },
+    {
+      "rank": 14,
+      "shard_start": 437500,
+      "shard_end": 468750,
+      "num_local_vectors": 31250,
+      "load_time_sec": 0.31821831200000006
+    },
+    {
+      "rank": 15,
+      "shard_start": 468750,
+      "shard_end": 500000,
+      "num_local_vectors": 31250,
+      "load_time_sec": 0.316005326
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 0.6952882979999999,
+  "initial_index_build_time_sec_mean": 0.31193890356250004,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 0.2610337330000001
+    },
+    {
+      "rank": 1,
+      "index_build_time_sec": 0.26277757700000004
+    },
+    {
+      "rank": 2,
+      "index_build_time_sec": 0.2626520290000003
+    },
+    {
+      "rank": 3,
+      "index_build_time_sec": 0.26290873500000034
+    },
+    {
+      "rank": 4,
+      "index_build_time_sec": 0.16435384399999986
+    },
+    {
+      "rank": 5,
+      "index_build_time_sec": 0.14794265899999992
+    },
+    {
+      "rank": 6,
+      "index_build_time_sec": 0.1458318709999995
+    },
+    {
+      "rank": 7,
+      "index_build_time_sec": 0.14618916199999976
+    },
+    {
+      "rank": 8,
+      "index_build_time_sec": 0.6952882979999999
+    },
+    {
+      "rank": 9,
+      "index_build_time_sec": 0.6803483290000001
+    },
+    {
+      "rank": 10,
+      "index_build_time_sec": 0.6800566610000001
+    },
+    {
+      "rank": 11,
+      "index_build_time_sec": 0.6796036970000001
+    },
+    {
+      "rank": 12,
+      "index_build_time_sec": 0.15196630599999983
+    },
+    {
+      "rank": 13,
+      "index_build_time_sec": 0.15037060800000024
+    },
+    {
+      "rank": 14,
+      "index_build_time_sec": 0.15023042700000033
+    },
+    {
+      "rank": 15,
+      "index_build_time_sec": 0.1494685210000002
+    }
+  ],
+  "dataset_metadata": {
+    "name": "benchmark_500k_2560d_55q",
+    "num_vectors": 500000,
+    "num_queries": 55,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false,
+    "vectors_shape": [
+      500000,
+      2560
+    ],
+    "queries_shape": [
+      55,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 50,
+      "mean": 0.05657047514000009,
+      "median": 0.04615938249999996,
+      "min": 0.04573174399999935,
+      "max": 0.11011952800000024,
+      "std": 0.01820081605707218
+    },
+    "merge_time_sec": {
+      "count": 50,
+      "mean": 0.0001742021399999949,
+      "median": 0.0001714914999997319,
+      "min": 0.00016098499999994687,
+      "max": 0.00023492000000047142,
+      "std": 1.0990589367943722e-05
+    },
+    "max_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.05589640273999999,
+      "median": 0.04552203099999996,
+      "min": 0.04511059300000042,
+      "max": 0.10944847499999977,
+      "std": 0.018160775840478278
+    },
+    "mean_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.039784211990000005,
+      "median": 0.038921527281250035,
+      "min": 0.038407887124999984,
+      "max": 0.050682234062500164,
+      "std": 0.0021492140570371176
+    },
+    "max_communication_time_sec": {
+      "count": 50,
+      "mean": 0.010421172180000032,
+      "median": 0.0010297019999998547,
+      "min": 0.0006053469999995897,
+      "max": 0.06513469400000016,
+      "std": 0.017318211240598794
+    },
+    "mean_communication_time_sec": {
+      "count": 50,
+      "mean": 0.0014819300775000155,
+      "median": 0.00023289671875009743,
+      "min": 0.00019922762500013125,
+      "max": 0.011434393749999938,
+      "std": 0.0024497394841980036
+    },
+    "throughput_queries_per_sec": {
+      "count": 50,
+      "mean": 18.97367189807964,
+      "median": 21.66406994286715,
+      "min": 9.081041466142116,
+      "max": 21.866649126698825,
+      "std": 4.204035300525109
+    }
+  },
+  "output": {
+    "run_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_multinode_latency_500k_per_run_queries/20260616-073944_faiss_centralized_016r_6c1c91a7",
+    "experiment_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_multinode_latency_500k_per_run_queries",
+    "unique_run_name": "20260616-073944_faiss_centralized_016r_6c1c91a7"
+  }
+}
