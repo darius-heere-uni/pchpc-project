@@ -1,0 +1,152 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "final_weak_scaling_100k_per_rank_per_run_queries",
+  "runtime_metadata": {
+    "created_at": "2026-06-17T22:59:38",
+    "hostname": "c0123",
+    "pid": 371800,
+    "cwd": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+    "config_path": "configs/weak_scaling_configs/final_weak_scaling_100k_per_rank_per_run_02r_tree.json",
+    "slurm": {
+      "SLURM_JOB_ID": "14344538",
+      "SLURM_JOB_NAME": "pchpc-bench",
+      "SLURM_SUBMIT_DIR": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+      "SLURM_JOB_NODELIST": "c0123",
+      "SLURM_JOB_NUM_NODES": "1",
+      "SLURM_NTASKS": "2",
+      "SLURM_NTASKS_PER_NODE": "2",
+      "SLURM_CPUS_PER_TASK": "1",
+      "SLURM_MEM_PER_NODE": "8192",
+      "SLURM_MEM_PER_CPU": null,
+      "SLURM_JOB_PARTITION": "scc-cpu",
+      "SLURM_CLUSTER_NAME": "emmy"
+    }
+  },
+  "retrieval_mode": "mpi_tree",
+  "search_backend": "faiss",
+  "faiss_num_threads": 1,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_query_pool_on_each_rank",
+  "query_policy": "per_run",
+  "query_pool_size": 55,
+  "queries_per_retrieval": 1,
+  "world_size": 2,
+  "num_vectors": 200000,
+  "num_queries": 1,
+  "dimension": 2560,
+  "top_k": 10,
+  "warmup_runs": 5,
+  "measurement_runs": 50,
+  "initial_load_time_sec_max": 0.8722709639999999,
+  "initial_load_time_sec_mean": 0.872009061,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 100000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 0.8722709639999999
+    },
+    {
+      "rank": 1,
+      "shard_start": 100000,
+      "shard_end": 200000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 0.8717471579999999
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 0.8944181369999997,
+  "initial_index_build_time_sec_mean": 0.8940018474999999,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 0.8944181369999997
+    },
+    {
+      "rank": 1,
+      "index_build_time_sec": 0.8935855580000001
+    }
+  ],
+  "dataset_metadata": {
+    "name": "weak_100k_per_rank_02r_2560d",
+    "num_vectors": 200000,
+    "num_queries": 55,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false,
+    "vectors_shape": [
+      200000,
+      2560
+    ],
+    "queries_shape": [
+      55,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 50,
+      "mean": 0.15240682643999998,
+      "median": 0.1376984509999999,
+      "min": 0.13745274600000013,
+      "max": 0.21249749500000004,
+      "std": 0.02514494140510972
+    },
+    "merge_time_sec": {
+      "count": 50,
+      "mean": 0.0037289712799999553,
+      "median": 0.00023557999999979096,
+      "min": 0.00021242100000051778,
+      "max": 0.05336144099999984,
+      "std": 0.01082520835888886
+    },
+    "max_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.15210161040000011,
+      "median": 0.13741306750000004,
+      "min": 0.13714991000000065,
+      "max": 0.21221892800000042,
+      "std": 0.025119262948587878
+    },
+    "mean_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.14875506024000004,
+      "median": 0.13691041125000014,
+      "min": 0.1365389355000004,
+      "max": 0.21148912900000028,
+      "std": 0.02202596404977628
+    },
+    "max_communication_time_sec": {
+      "count": 50,
+      "mean": 0.003608090599999905,
+      "median": 0.00011685499999969373,
+      "min": 0.00010130800000052176,
+      "max": 0.0532332000000002,
+      "std": 0.010822528529135182
+    },
+    "mean_communication_time_sec": {
+      "count": 50,
+      "mean": 0.0018481178200000015,
+      "median": 0.00010166525000010473,
+      "min": 8.773650000026834e-05,
+      "max": 0.02666387849999996,
+      "std": 0.005411483337755197
+    },
+    "throughput_queries_per_sec": {
+      "count": 50,
+      "mean": 6.70758723567883,
+      "median": 7.262245820663356,
+      "min": 4.7059378276435675,
+      "max": 7.275227517098852,
+      "std": 0.9079462853806108
+    }
+  },
+  "output": {
+    "run_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_weak_scaling_100k_per_rank_per_run_queries/20260617-225938_faiss_tree_002r_477e6186",
+    "experiment_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_weak_scaling_100k_per_rank_per_run_queries",
+    "unique_run_name": "20260617-225938_faiss_tree_002r_477e6186"
+  }
+}

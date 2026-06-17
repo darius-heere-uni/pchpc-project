@@ -1,0 +1,218 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "final_backend_comparison_500k_per_run_queries",
+  "runtime_metadata": {
+    "created_at": "2026-06-17T12:11:02",
+    "hostname": "c0421",
+    "pid": 1577852,
+    "cwd": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+    "config_path": "configs/backend_comparison_configs/final_backend_comparison_500k_per_run_numpy_centralized.json",
+    "slurm": {
+      "SLURM_JOB_ID": "14339685",
+      "SLURM_JOB_NAME": "pchpc-bench",
+      "SLURM_SUBMIT_DIR": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+      "SLURM_JOB_NODELIST": "c0421",
+      "SLURM_JOB_NUM_NODES": "1",
+      "SLURM_NTASKS": "8",
+      "SLURM_NTASKS_PER_NODE": "8",
+      "SLURM_CPUS_PER_TASK": "1",
+      "SLURM_MEM_PER_NODE": "32768",
+      "SLURM_MEM_PER_CPU": null,
+      "SLURM_JOB_PARTITION": "scc-cpu",
+      "SLURM_CLUSTER_NAME": "emmy"
+    }
+  },
+  "retrieval_mode": "mpi_centralized",
+  "search_backend": "numpy",
+  "faiss_num_threads": 1,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_query_pool_on_each_rank",
+  "query_policy": "per_run",
+  "query_pool_size": 55,
+  "queries_per_retrieval": 1,
+  "world_size": 8,
+  "num_vectors": 500000,
+  "num_queries": 1,
+  "dimension": 2560,
+  "top_k": 10,
+  "warmup_runs": 5,
+  "measurement_runs": 50,
+  "initial_load_time_sec_max": 0.993709741,
+  "initial_load_time_sec_mean": 0.988870356875,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 62500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.9879741040000001
+    },
+    {
+      "rank": 1,
+      "shard_start": 62500,
+      "shard_end": 125000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.983650062
+    },
+    {
+      "rank": 2,
+      "shard_start": 125000,
+      "shard_end": 187500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.9795380959999999
+    },
+    {
+      "rank": 3,
+      "shard_start": 187500,
+      "shard_end": 250000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.992176696
+    },
+    {
+      "rank": 4,
+      "shard_start": 250000,
+      "shard_end": 312500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.9916664909999998
+    },
+    {
+      "rank": 5,
+      "shard_start": 312500,
+      "shard_end": 375000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.9917401740000001
+    },
+    {
+      "rank": 6,
+      "shard_start": 375000,
+      "shard_end": 437500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.9905074909999999
+    },
+    {
+      "rank": 7,
+      "shard_start": 437500,
+      "shard_end": 500000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.993709741
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 1.3346999999885867e-05,
+  "initial_index_build_time_sec_mean": 9.988124999943393e-06,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 8.221999999946661e-06
+    },
+    {
+      "rank": 1,
+      "index_build_time_sec": 1.3346999999885867e-05
+    },
+    {
+      "rank": 2,
+      "index_build_time_sec": 9.825000000018846e-06
+    },
+    {
+      "rank": 3,
+      "index_build_time_sec": 9.718999999908107e-06
+    },
+    {
+      "rank": 4,
+      "index_build_time_sec": 9.295999999991977e-06
+    },
+    {
+      "rank": 5,
+      "index_build_time_sec": 1.06319999999549e-05
+    },
+    {
+      "rank": 6,
+      "index_build_time_sec": 9.47500000014756e-06
+    },
+    {
+      "rank": 7,
+      "index_build_time_sec": 9.388999999693226e-06
+    }
+  ],
+  "dataset_metadata": {
+    "name": "benchmark_500k_2560d_55q",
+    "num_vectors": 500000,
+    "num_queries": 55,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false,
+    "vectors_shape": [
+      500000,
+      2560
+    ],
+    "queries_shape": [
+      55,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 50,
+      "mean": 0.04727665915999997,
+      "median": 0.04731088899999991,
+      "min": 0.04639861599999984,
+      "max": 0.048534500999999786,
+      "std": 0.000458620237007226
+    },
+    "merge_time_sec": {
+      "count": 50,
+      "mean": 7.769898000000275e-05,
+      "median": 7.003350000012176e-05,
+      "min": 6.377600000018191e-05,
+      "max": 0.0003717459999998951,
+      "std": 4.2987123025124525e-05
+    },
+    "max_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.046893831379999945,
+      "median": 0.046954871499999884,
+      "min": 0.046010722999999754,
+      "max": 0.047887865999999946,
+      "std": 0.00043904045201960195
+    },
+    "mean_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.04577901769499999,
+      "median": 0.04585612331249994,
+      "min": 0.044718886999999985,
+      "max": 0.04673850475000002,
+      "std": 0.0004564123716309849
+    },
+    "max_communication_time_sec": {
+      "count": 50,
+      "mean": 0.0011996665000000427,
+      "median": 0.001154888000000187,
+      "min": 0.0009597600000001982,
+      "max": 0.002227018000000136,
+      "std": 0.0002309407255813864
+    },
+    "mean_communication_time_sec": {
+      "count": 50,
+      "mean": 0.00039088573999999823,
+      "median": 0.0003819464374999748,
+      "min": 0.0002776844999999306,
+      "max": 0.000659058875000007,
+      "std": 5.7219827125418174e-05
+    },
+    "throughput_queries_per_sec": {
+      "count": 50,
+      "mean": 21.154031922836,
+      "median": 21.13678312222347,
+      "min": 20.60389989380965,
+      "max": 21.552366993015557,
+      "std": 0.20461949866941243
+    }
+  },
+  "output": {
+    "run_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_backend_comparison_500k_per_run_queries/20260617-121102_numpy_centralized_008r_f22ba631",
+    "experiment_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_backend_comparison_500k_per_run_queries",
+    "unique_run_name": "20260617-121102_numpy_centralized_008r_f22ba631"
+  }
+}
