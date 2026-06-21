@@ -1,0 +1,218 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "final_multinode_latency_500k_per_run_queries_rerun",
+  "runtime_metadata": {
+    "created_at": "2026-06-18T00:16:35",
+    "hostname": "c0072",
+    "pid": 328262,
+    "cwd": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+    "config_path": "configs/final_multinode_latency_500k_per_run_tree_rerun.json",
+    "slurm": {
+      "SLURM_JOB_ID": "14344755",
+      "SLURM_JOB_NAME": "pchpc-bench",
+      "SLURM_SUBMIT_DIR": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+      "SLURM_JOB_NODELIST": "c[0072,0077]",
+      "SLURM_JOB_NUM_NODES": "2",
+      "SLURM_NTASKS": "8",
+      "SLURM_NTASKS_PER_NODE": "4",
+      "SLURM_CPUS_PER_TASK": "1",
+      "SLURM_MEM_PER_NODE": "16384",
+      "SLURM_MEM_PER_CPU": null,
+      "SLURM_JOB_PARTITION": "scc-cpu",
+      "SLURM_CLUSTER_NAME": "emmy"
+    }
+  },
+  "retrieval_mode": "mpi_tree",
+  "search_backend": "faiss",
+  "faiss_num_threads": 1,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_query_pool_on_each_rank",
+  "query_policy": "per_run",
+  "query_pool_size": 55,
+  "queries_per_retrieval": 1,
+  "world_size": 8,
+  "num_vectors": 500000,
+  "num_queries": 1,
+  "dimension": 2560,
+  "top_k": 10,
+  "warmup_runs": 5,
+  "measurement_runs": 50,
+  "initial_load_time_sec_max": 0.821248081,
+  "initial_load_time_sec_mean": 0.7139680015000001,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 62500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.612608955
+    },
+    {
+      "rank": 1,
+      "shard_start": 62500,
+      "shard_end": 125000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.607404001
+    },
+    {
+      "rank": 2,
+      "shard_start": 125000,
+      "shard_end": 187500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.609010905
+    },
+    {
+      "rank": 3,
+      "shard_start": 187500,
+      "shard_end": 250000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.61028099
+    },
+    {
+      "rank": 4,
+      "shard_start": 250000,
+      "shard_end": 312500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.821229033
+    },
+    {
+      "rank": 5,
+      "shard_start": 312500,
+      "shard_end": 375000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.8175083160000001
+    },
+    {
+      "rank": 6,
+      "shard_start": 375000,
+      "shard_end": 437500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.821248081
+    },
+    {
+      "rank": 7,
+      "shard_start": 437500,
+      "shard_end": 500000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 0.812453731
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 0.20821306500000003,
+  "initial_index_build_time_sec_mean": 0.20042256375000006,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 0.19716138300000008
+    },
+    {
+      "rank": 1,
+      "index_build_time_sec": 0.19645455599999995
+    },
+    {
+      "rank": 2,
+      "index_build_time_sec": 0.19456955100000006
+    },
+    {
+      "rank": 3,
+      "index_build_time_sec": 0.19611645700000002
+    },
+    {
+      "rank": 4,
+      "index_build_time_sec": 0.20821306500000003
+    },
+    {
+      "rank": 5,
+      "index_build_time_sec": 0.20342298000000003
+    },
+    {
+      "rank": 6,
+      "index_build_time_sec": 0.20497380300000012
+    },
+    {
+      "rank": 7,
+      "index_build_time_sec": 0.2024687150000002
+    }
+  ],
+  "dataset_metadata": {
+    "name": "benchmark_500k_2560d_55q",
+    "num_vectors": 500000,
+    "num_queries": 55,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false,
+    "vectors_shape": [
+      500000,
+      2560
+    ],
+    "queries_shape": [
+      55,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 50,
+      "mean": 0.06279483946000008,
+      "median": 0.06263206849999992,
+      "min": 0.06197786800000005,
+      "max": 0.0648216060000002,
+      "std": 0.0005521399366448613
+    },
+    "merge_time_sec": {
+      "count": 50,
+      "mean": 0.001839964759999999,
+      "median": 0.0017607955000000786,
+      "min": 0.0003087539999997446,
+      "max": 0.0038360800000001305,
+      "std": 0.0006233253227682458
+    },
+    "max_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.06235230212000006,
+      "median": 0.062219218000000076,
+      "min": 0.061583713000000095,
+      "max": 0.06399458599999974,
+      "std": 0.0004981098502913697
+    },
+    "mean_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.06115174259500001,
+      "median": 0.06108335781249999,
+      "min": 0.060818402125000115,
+      "max": 0.06194180799999999,
+      "std": 0.00024777417751976866
+    },
+    "max_communication_time_sec": {
+      "count": 50,
+      "mean": 0.0017089033599999937,
+      "median": 0.0015752765000005553,
+      "min": 0.0009244470000009386,
+      "max": 0.0036709070000000565,
+      "std": 0.0005608450228098445
+    },
+    "mean_communication_time_sec": {
+      "count": 50,
+      "mean": 0.00042633744250000663,
+      "median": 0.00040132974999995685,
+      "min": 0.0002020443750002654,
+      "max": 0.0007871936250000156,
+      "std": 9.780458666415251e-05
+    },
+    "throughput_queries_per_sec": {
+      "count": 50,
+      "mean": 15.926070123884795,
+      "median": 15.96626177783865,
+      "min": 15.426955018670734,
+      "max": 16.134791858280753,
+      "std": 0.13865160624514425
+    }
+  },
+  "output": {
+    "run_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_multinode_latency_500k_per_run_queries_rerun/20260618-001635_faiss_tree_008r_c0c7cdbd",
+    "experiment_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_multinode_latency_500k_per_run_queries_rerun",
+    "unique_run_name": "20260618-001635_faiss_tree_008r_c0c7cdbd"
+  }
+}

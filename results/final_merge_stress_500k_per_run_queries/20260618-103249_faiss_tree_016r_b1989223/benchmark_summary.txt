@@ -14,45 +14,45 @@ Benchmark setup:
   FAISS threads/rank: 1
 
 Initial loading:
-  Load time max:      2.489173 s
-  Load time mean:     1.831176 s
+  Load time max:      1.242095 s
+  Load time mean:     1.225498 s
 
 Initial local index construction:
-  Index build max:    0.245944 s
-  Index build mean:   0.240343 s
+  Index build max:    0.177957 s
+  Index build mean:   0.173436 s
   Index reuse:        True
 
 Measured retrieval timings:
   MPI retrieval time:
-    mean:   0.056169
-    median: 0.042085
-    min:    0.039523
-    max:    0.099269
-    std:    0.021089
+    mean:   0.036192
+    median: 0.036064
+    min:    0.035898
+    max:    0.037732
+    std:    0.000365
   Merge time:
-    mean:   0.015753
-    median: 0.000841
-    min:    0.000410
-    max:    0.061400
-    std:    0.020778
+    mean:   0.000939
+    median: 0.000864
+    min:    0.000714
+    max:    0.002235
+    std:    0.000264
   Max local search time:
-    mean:   0.055527
-    median: 0.041508
-    min:    0.039020
-    max:    0.098656
-    std:    0.021033
+    mean:   0.035682
+    median: 0.035582
+    min:    0.035411
+    max:    0.036985
+    std:    0.000299
   Max communication time:
-    mean:   0.016303
-    median: 0.003077
-    min:    0.000629
-    max:    0.061268
-    std:    0.020571
+    mean:   0.000776
+    median: 0.000688
+    min:    0.000600
+    max:    0.001920
+    std:    0.000270
   Throughput queries/sec:
-    mean:   19.913392
-    median: 23.781002
-    min:    10.073614
-    max:    25.301441
-    std:    5.896927
+    mean:   27.633247
+    median: 27.728625
+    min:    26.502550
+    max:    27.856339
+    std:    0.271028
 
 Note:
   In benchmark mode, the local search index is built once per rank and reused across warmup and measured retrieval runs.
