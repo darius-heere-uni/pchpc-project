@@ -1,0 +1,218 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "final_multinode_latency_500k_per_run_queries",
+  "runtime_metadata": {
+    "created_at": "2026-06-16T07:30:53",
+    "hostname": "c0084",
+    "pid": 3067619,
+    "cwd": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+    "config_path": "configs/final_multinode_latency_500k_per_run_centralized.json",
+    "slurm": {
+      "SLURM_JOB_ID": "14305800",
+      "SLURM_JOB_NAME": "pchpc-bench",
+      "SLURM_SUBMIT_DIR": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+      "SLURM_JOB_NODELIST": "c[0084,0411]",
+      "SLURM_JOB_NUM_NODES": "2",
+      "SLURM_NTASKS": "8",
+      "SLURM_NTASKS_PER_NODE": "4",
+      "SLURM_CPUS_PER_TASK": "1",
+      "SLURM_MEM_PER_NODE": "16384",
+      "SLURM_MEM_PER_CPU": null,
+      "SLURM_JOB_PARTITION": "scc-cpu",
+      "SLURM_CLUSTER_NAME": "emmy"
+    }
+  },
+  "retrieval_mode": "mpi_centralized",
+  "search_backend": "faiss",
+  "faiss_num_threads": 1,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_query_pool_on_each_rank",
+  "query_policy": "per_run",
+  "query_pool_size": 55,
+  "queries_per_retrieval": 1,
+  "world_size": 8,
+  "num_vectors": 500000,
+  "num_queries": 1,
+  "dimension": 2560,
+  "top_k": 10,
+  "warmup_runs": 5,
+  "measurement_runs": 50,
+  "initial_load_time_sec_max": 3.9815121830000004,
+  "initial_load_time_sec_mean": 3.508036222875,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 62500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 3.9815121830000004
+    },
+    {
+      "rank": 1,
+      "shard_start": 62500,
+      "shard_end": 125000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 3.521549336
+    },
+    {
+      "rank": 2,
+      "shard_start": 125000,
+      "shard_end": 187500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 3.495247061
+    },
+    {
+      "rank": 3,
+      "shard_start": 187500,
+      "shard_end": 250000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 3.5957353289999996
+    },
+    {
+      "rank": 4,
+      "shard_start": 250000,
+      "shard_end": 312500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 3.2214935440000003
+    },
+    {
+      "rank": 5,
+      "shard_start": 312500,
+      "shard_end": 375000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 3.3491438550000003
+    },
+    {
+      "rank": 6,
+      "shard_start": 375000,
+      "shard_end": 437500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 3.5510769719999997
+    },
+    {
+      "rank": 7,
+      "shard_start": 437500,
+      "shard_end": 500000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 3.3485315030000002
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 0.6681321540000003,
+  "initial_index_build_time_sec_mean": 0.5400641141249999,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 0.6644690430000004
+    },
+    {
+      "rank": 1,
+      "index_build_time_sec": 0.6681321540000003
+    },
+    {
+      "rank": 2,
+      "index_build_time_sec": 0.6469729480000002
+    },
+    {
+      "rank": 3,
+      "index_build_time_sec": 0.662098683
+    },
+    {
+      "rank": 4,
+      "index_build_time_sec": 0.42067023299999917
+    },
+    {
+      "rank": 5,
+      "index_build_time_sec": 0.41297596499999933
+    },
+    {
+      "rank": 6,
+      "index_build_time_sec": 0.41148848699999974
+    },
+    {
+      "rank": 7,
+      "index_build_time_sec": 0.4337054
+    }
+  ],
+  "dataset_metadata": {
+    "name": "benchmark_500k_2560d_55q",
+    "num_vectors": 500000,
+    "num_queries": 55,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false,
+    "vectors_shape": [
+      500000,
+      2560
+    ],
+    "queries_shape": [
+      55,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 50,
+      "mean": 0.07192226976000013,
+      "median": 0.06910236600000008,
+      "min": 0.06671260800000134,
+      "max": 0.1054215350000014,
+      "std": 0.009120012307809306
+    },
+    "merge_time_sec": {
+      "count": 50,
+      "mean": 0.00013282751999996734,
+      "median": 0.00012936300000054857,
+      "min": 0.00011566000000051702,
+      "max": 0.00023995799999987355,
+      "std": 1.795634951558658e-05
+    },
+    "max_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.07144021417999984,
+      "median": 0.06847681999999988,
+      "min": 0.06624011799999963,
+      "max": 0.10495206999999951,
+      "std": 0.009075925626955975
+    },
+    "mean_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.06737795915249996,
+      "median": 0.06677898606249999,
+      "min": 0.06575099575000021,
+      "max": 0.07600987849999985,
+      "std": 0.0019053111738330417
+    },
+    "max_communication_time_sec": {
+      "count": 50,
+      "mean": 0.005185424459999925,
+      "median": 0.0026823514999998466,
+      "min": 0.0005001440000000912,
+      "max": 0.03954746399999998,
+      "std": 0.008666105378647109
+    },
+    "mean_communication_time_sec": {
+      "count": 50,
+      "mean": 0.0008586448974999827,
+      "median": 0.000515591562499973,
+      "min": 0.00016926425000018952,
+      "max": 0.005513665124999845,
+      "std": 0.0012349253605566804
+    },
+    "throughput_queries_per_sec": {
+      "count": 50,
+      "mean": 14.071913599351548,
+      "median": 14.47129216287573,
+      "min": 9.485727939741977,
+      "max": 14.98967031838989,
+      "std": 1.3586773896821522
+    }
+  },
+  "output": {
+    "run_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_multinode_latency_500k_per_run_queries/20260616-073053_faiss_centralized_008r_276a4ceb",
+    "experiment_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_multinode_latency_500k_per_run_queries",
+    "unique_run_name": "20260616-073053_faiss_centralized_008r_276a4ceb"
+  }
+}

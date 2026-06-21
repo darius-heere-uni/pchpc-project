@@ -1,0 +1,306 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "final_weak_scaling_100k_per_rank_per_run_queries",
+  "runtime_metadata": {
+    "created_at": "2026-06-17T22:56:04",
+    "hostname": "c0007",
+    "pid": 2585695,
+    "cwd": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+    "config_path": "configs/weak_scaling_configs/final_weak_scaling_100k_per_rank_per_run_16r_centralized.json",
+    "slurm": {
+      "SLURM_JOB_ID": "14344536",
+      "SLURM_JOB_NAME": "pchpc-bench",
+      "SLURM_SUBMIT_DIR": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+      "SLURM_JOB_NODELIST": "c0007",
+      "SLURM_JOB_NUM_NODES": "1",
+      "SLURM_NTASKS": "16",
+      "SLURM_NTASKS_PER_NODE": "16",
+      "SLURM_CPUS_PER_TASK": "1",
+      "SLURM_MEM_PER_NODE": "32768",
+      "SLURM_MEM_PER_CPU": null,
+      "SLURM_JOB_PARTITION": "scc-cpu",
+      "SLURM_CLUSTER_NAME": "emmy"
+    }
+  },
+  "retrieval_mode": "mpi_centralized",
+  "search_backend": "faiss",
+  "faiss_num_threads": 1,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_query_pool_on_each_rank",
+  "query_policy": "per_run",
+  "query_pool_size": 55,
+  "queries_per_retrieval": 1,
+  "world_size": 16,
+  "num_vectors": 1600000,
+  "num_queries": 1,
+  "dimension": 2560,
+  "top_k": 10,
+  "warmup_runs": 5,
+  "measurement_runs": 50,
+  "initial_load_time_sec_max": 11.269262032,
+  "initial_load_time_sec_mean": 9.6784331380625,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 100000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 9.361869358
+    },
+    {
+      "rank": 1,
+      "shard_start": 100000,
+      "shard_end": 200000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 9.593390831
+    },
+    {
+      "rank": 2,
+      "shard_start": 200000,
+      "shard_end": 300000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 8.757537275
+    },
+    {
+      "rank": 3,
+      "shard_start": 300000,
+      "shard_end": 400000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 10.236963962
+    },
+    {
+      "rank": 4,
+      "shard_start": 400000,
+      "shard_end": 500000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 10.375408535
+    },
+    {
+      "rank": 5,
+      "shard_start": 500000,
+      "shard_end": 600000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 8.528903267
+    },
+    {
+      "rank": 6,
+      "shard_start": 600000,
+      "shard_end": 700000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 10.547632583
+    },
+    {
+      "rank": 7,
+      "shard_start": 700000,
+      "shard_end": 800000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 11.269262032
+    },
+    {
+      "rank": 8,
+      "shard_start": 800000,
+      "shard_end": 900000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 8.683698497
+    },
+    {
+      "rank": 9,
+      "shard_start": 900000,
+      "shard_end": 1000000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 9.703940466999999
+    },
+    {
+      "rank": 10,
+      "shard_start": 1000000,
+      "shard_end": 1100000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 9.553192896999999
+    },
+    {
+      "rank": 11,
+      "shard_start": 1100000,
+      "shard_end": 1200000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 8.908905570000002
+    },
+    {
+      "rank": 12,
+      "shard_start": 1200000,
+      "shard_end": 1300000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 9.93887935
+    },
+    {
+      "rank": 13,
+      "shard_start": 1300000,
+      "shard_end": 1400000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 9.228758476000001
+    },
+    {
+      "rank": 14,
+      "shard_start": 1400000,
+      "shard_end": 1500000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 9.720286848999999
+    },
+    {
+      "rank": 15,
+      "shard_start": 1500000,
+      "shard_end": 1600000,
+      "num_local_vectors": 100000,
+      "load_time_sec": 10.446300260000001
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 1.9317084159999993,
+  "initial_index_build_time_sec_mean": 1.6255397715625,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 1.6417506920000005
+    },
+    {
+      "rank": 1,
+      "index_build_time_sec": 1.146469830000001
+    },
+    {
+      "rank": 2,
+      "index_build_time_sec": 1.767453421999999
+    },
+    {
+      "rank": 3,
+      "index_build_time_sec": 1.8177355639999995
+    },
+    {
+      "rank": 4,
+      "index_build_time_sec": 1.7696017309999998
+    },
+    {
+      "rank": 5,
+      "index_build_time_sec": 1.708163763
+    },
+    {
+      "rank": 6,
+      "index_build_time_sec": 1.7856782540000005
+    },
+    {
+      "rank": 7,
+      "index_build_time_sec": 1.8722618059999991
+    },
+    {
+      "rank": 8,
+      "index_build_time_sec": 1.9317084159999993
+    },
+    {
+      "rank": 9,
+      "index_build_time_sec": 1.3031583090000005
+    },
+    {
+      "rank": 10,
+      "index_build_time_sec": 1.2019878010000014
+    },
+    {
+      "rank": 11,
+      "index_build_time_sec": 1.1045410770000004
+    },
+    {
+      "rank": 12,
+      "index_build_time_sec": 1.8752337309999998
+    },
+    {
+      "rank": 13,
+      "index_build_time_sec": 1.4605856710000005
+    },
+    {
+      "rank": 14,
+      "index_build_time_sec": 1.7298050209999989
+    },
+    {
+      "rank": 15,
+      "index_build_time_sec": 1.8925012569999993
+    }
+  ],
+  "dataset_metadata": {
+    "name": "weak_100k_per_rank_16r_2560d",
+    "num_vectors": 1600000,
+    "num_queries": 55,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": false,
+    "vectors_shape": [
+      1600000,
+      2560
+    ],
+    "queries_shape": [
+      55,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 50,
+      "mean": 0.20862114585999966,
+      "median": 0.21218744149999935,
+      "min": 0.1614505830000006,
+      "max": 0.22734232799999887,
+      "std": 0.016095134627618895
+    },
+    "merge_time_sec": {
+      "count": 50,
+      "mean": 0.00014080314000000982,
+      "median": 0.00013651749999965546,
+      "min": 0.00011692200000013031,
+      "max": 0.00022610899999975231,
+      "std": 1.9003706844486026e-05
+    },
+    "max_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.20794413896000039,
+      "median": 0.21156370050000106,
+      "min": 0.16032242800000063,
+      "max": 0.22676441099999778,
+      "std": 0.016165180393612682
+    },
+    "mean_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.15906393371875005,
+      "median": 0.15890407087500058,
+      "min": 0.15238688524999988,
+      "max": 0.1663100928125003,
+      "std": 0.0032911630796754418
+    },
+    "max_communication_time_sec": {
+      "count": 50,
+      "mean": 0.05318424621999998,
+      "median": 0.05889242449999976,
+      "min": 0.0008131620000000339,
+      "max": 0.07122700600000087,
+      "std": 0.017453242472351155
+    },
+    "mean_communication_time_sec": {
+      "count": 50,
+      "mean": 0.009329089771249943,
+      "median": 0.009155469968749719,
+      "min": 0.00020994956250008912,
+      "max": 0.021621121562499734,
+      "std": 0.0050554602847068695
+    },
+    "throughput_queries_per_sec": {
+      "count": 50,
+      "mean": 4.826600060757704,
+      "median": 4.712814327714525,
+      "min": 4.398652942447238,
+      "max": 6.1938457044778605,
+      "std": 0.4414683626586231
+    }
+  },
+  "output": {
+    "run_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_weak_scaling_100k_per_rank_per_run_queries/20260617-225604_faiss_centralized_016r_a6d92fe4",
+    "experiment_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/final_weak_scaling_100k_per_rank_per_run_queries",
+    "unique_run_name": "20260617-225604_faiss_centralized_016r_a6d92fe4"
+  }
+}

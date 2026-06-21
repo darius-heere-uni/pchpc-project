@@ -183,6 +183,9 @@ def build_row(
         "loading_strategy": metrics.get("loading_strategy"),
         "vector_storage": metrics.get("vector_storage"),
         "query_loading": metrics.get("query_loading"),
+        "query_policy": metrics.get("query_policy"),
+        "query_pool_size": metrics.get("query_pool_size"),
+        "queries_per_retrieval": metrics.get("queries_per_retrieval"),
 
         # Workload
         "world_size": metrics.get("world_size"),
@@ -210,6 +213,9 @@ def build_row(
         "config_dataset_name": get_nested(config, ["dataset", "name"]),
         "config_dataset_seed": get_nested(config, ["dataset", "seed"]),
         "config_dataset_normalize": get_nested(config, ["dataset", "normalize"]),
+        "config_benchmark_query_policy": get_nested(
+            config, ["benchmark", "query_policy"]
+        ),
     }
 
     row.update(flatten_timing_summary(metrics))

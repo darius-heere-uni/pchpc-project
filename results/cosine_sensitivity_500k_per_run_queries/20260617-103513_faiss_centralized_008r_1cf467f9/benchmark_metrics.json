@@ -1,0 +1,218 @@
+{
+  "benchmark_mode": "hot_repeated_retrieval",
+  "run_id": "cosine_sensitivity_500k_per_run_queries",
+  "runtime_metadata": {
+    "created_at": "2026-06-17T10:35:13",
+    "hostname": "c0421",
+    "pid": 1553877,
+    "cwd": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+    "config_path": "configs/cosine_sensitivity_configs/cosine_sensitivity_500k_per_run_centralized.json",
+    "slurm": {
+      "SLURM_JOB_ID": "14338633",
+      "SLURM_JOB_NAME": "pchpc-bench",
+      "SLURM_SUBMIT_DIR": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project",
+      "SLURM_JOB_NODELIST": "c0421",
+      "SLURM_JOB_NUM_NODES": "1",
+      "SLURM_NTASKS": "8",
+      "SLURM_NTASKS_PER_NODE": "8",
+      "SLURM_CPUS_PER_TASK": "1",
+      "SLURM_MEM_PER_NODE": "32768",
+      "SLURM_MEM_PER_CPU": null,
+      "SLURM_JOB_PARTITION": "scc-cpu",
+      "SLURM_CLUSTER_NAME": "emmy"
+    }
+  },
+  "retrieval_mode": "mpi_centralized",
+  "search_backend": "faiss",
+  "faiss_num_threads": 1,
+  "loading_strategy": "shard_aware_shared_npy",
+  "vector_storage": "single_vectors_npy",
+  "query_loading": "full_query_pool_on_each_rank",
+  "query_policy": "per_run",
+  "query_pool_size": 55,
+  "queries_per_retrieval": 1,
+  "world_size": 8,
+  "num_vectors": 500000,
+  "num_queries": 1,
+  "dimension": 2560,
+  "top_k": 10,
+  "warmup_runs": 5,
+  "measurement_runs": 50,
+  "initial_load_time_sec_max": 1.2523430589999998,
+  "initial_load_time_sec_mean": 1.2456602453749999,
+  "rank_load_info": [
+    {
+      "rank": 0,
+      "shard_start": 0,
+      "shard_end": 62500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 1.2421143040000002
+    },
+    {
+      "rank": 1,
+      "shard_start": 62500,
+      "shard_end": 125000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 1.24044438
+    },
+    {
+      "rank": 2,
+      "shard_start": 125000,
+      "shard_end": 187500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 1.23989928
+    },
+    {
+      "rank": 3,
+      "shard_start": 187500,
+      "shard_end": 250000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 1.249166754
+    },
+    {
+      "rank": 4,
+      "shard_start": 250000,
+      "shard_end": 312500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 1.247313541
+    },
+    {
+      "rank": 5,
+      "shard_start": 312500,
+      "shard_end": 375000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 1.246498506
+    },
+    {
+      "rank": 6,
+      "shard_start": 375000,
+      "shard_end": 437500,
+      "num_local_vectors": 62500,
+      "load_time_sec": 1.2475021389999998
+    },
+    {
+      "rank": 7,
+      "shard_start": 437500,
+      "shard_end": 500000,
+      "num_local_vectors": 62500,
+      "load_time_sec": 1.2523430589999998
+    }
+  ],
+  "search_index_reuse": true,
+  "initial_index_build_time_sec_max": 0.22214831599999996,
+  "initial_index_build_time_sec_mean": 0.21916243987499995,
+  "rank_index_build_info": [
+    {
+      "rank": 0,
+      "index_build_time_sec": 0.220191609
+    },
+    {
+      "rank": 1,
+      "index_build_time_sec": 0.2134196519999998
+    },
+    {
+      "rank": 2,
+      "index_build_time_sec": 0.21924467299999995
+    },
+    {
+      "rank": 3,
+      "index_build_time_sec": 0.22214831599999996
+    },
+    {
+      "rank": 4,
+      "index_build_time_sec": 0.21994735600000004
+    },
+    {
+      "rank": 5,
+      "index_build_time_sec": 0.21814335099999993
+    },
+    {
+      "rank": 6,
+      "index_build_time_sec": 0.2193736879999999
+    },
+    {
+      "rank": 7,
+      "index_build_time_sec": 0.220830874
+    }
+  ],
+  "dataset_metadata": {
+    "name": "benchmark_500k_2560d_normalized_55q",
+    "num_vectors": 500000,
+    "num_queries": 55,
+    "dimension": 2560,
+    "dtype": "float32",
+    "seed": 42,
+    "normalize": true,
+    "vectors_shape": [
+      500000,
+      2560
+    ],
+    "queries_shape": [
+      55,
+      2560
+    ]
+  },
+  "timing_summary": {
+    "mpi_total_time_sec": {
+      "count": 50,
+      "mean": 0.06737649812000006,
+      "median": 0.06734028999999975,
+      "min": 0.06631203400000008,
+      "max": 0.06865187400000039,
+      "std": 0.0005194881362000167
+    },
+    "merge_time_sec": {
+      "count": 50,
+      "mean": 0.00012674944000004907,
+      "median": 0.00012240450000011727,
+      "min": 0.00011174199999963719,
+      "max": 0.00019002500000020461,
+      "std": 1.546588968540821e-05
+    },
+    "max_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.06692941847999995,
+      "median": 0.06692925449999998,
+      "min": 0.0658787059999999,
+      "max": 0.06805442399999961,
+      "std": 0.0005080059752689465
+    },
+    "mean_local_search_time_sec": {
+      "count": 50,
+      "mean": 0.06596869640749999,
+      "median": 0.06605981531250002,
+      "min": 0.06481600687500005,
+      "max": 0.06737583137500003,
+      "std": 0.0006199580409711762
+    },
+    "max_communication_time_sec": {
+      "count": 50,
+      "mean": 0.000549547820000047,
+      "median": 0.0005327065000000353,
+      "min": 0.0003697500000003906,
+      "max": 0.0012668900000001315,
+      "std": 0.00015467053089207825
+    },
+    "mean_communication_time_sec": {
+      "count": 50,
+      "mean": 0.00020118341250002891,
+      "median": 0.00018745468749994942,
+      "min": 0.0001591224999999974,
+      "max": 0.00046235674999994814,
+      "std": 4.9117871054379414e-05
+    },
+    "throughput_queries_per_sec": {
+      "count": 50,
+      "mean": 14.842832720686163,
+      "median": 14.849950987390478,
+      "min": 14.566244761213573,
+      "max": 15.08021907456494,
+      "std": 0.11411159895110541
+    }
+  },
+  "output": {
+    "run_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/cosine_sensitivity_500k_per_run_queries/20260617-103513_faiss_centralized_008r_1cf467f9",
+    "experiment_dir": "/mnt/vast-standard/home/darius.heere/u27936/pchpc-project/results/cosine_sensitivity_500k_per_run_queries",
+    "unique_run_name": "20260617-103513_faiss_centralized_008r_1cf467f9"
+  }
+}

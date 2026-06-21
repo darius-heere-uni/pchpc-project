@@ -105,10 +105,59 @@ def summarize(values: list[float]) -> dict[str, float | int]:
         "std": std_value,
     }
 
+def validate_query_policy(
+    query_policy: str,
+    queries,
+    warmup_runs: int,
+    measurement_runs: int,
+) -> None:
+    valid_policies = {"fixed", "per_run"}
+
+    if query_policy not in valid_policies:
+        raise ValueError(
+            f"Unknown query_policy={query_policy!r}. "
+            f"Expected one of: {sorted(valid_policies)}"
+        )
+
+    if query_policy == "per_run":
+        required_queries = warmup_runs + measurement_runs
+
+        if queries.shape[0] < required_queries:
+            raise ValueError(
+                "query_policy='per_run' requires at least "
+                f"warmup_runs + measurement_runs = {required_queries} queries, "
+                f"but the loaded dataset only contains {queries.shape[0]} queries."
+            )
+
+
+def select_queries_for_iteration(
+    queries,
+    query_policy: str,
+    iteration_index: int,
+):
+    """
+    Select the query matrix for one warmup or measurement iteration.
+
+    fixed:
+        Reuse the full loaded query matrix every time. This is the old behavior.
+
+    per_run:
+        Use exactly one fresh query row per warmup/measurement iteration.
+        The returned shape is still 2D: (1, dimension).
+    """
+    if query_policy == "fixed":
+        return queries, None
+
+    if query_policy == "per_run":
+        return queries[iteration_index:iteration_index + 1], iteration_index
+
+    raise ValueError(f"Unknown query_policy: {query_policy}")
+
 
 def extract_compact_run_metrics(
     run_index: int,
     metrics: dict[str, Any],
+    query_index: int | None = None,
 ) -> dict[str, Any]:
     rank_info = metrics["rank_info"]
 
@@ -136,6 +185,8 @@ def extract_compact_run_metrics(
 
     return {
         "run_index": run_index,
+        "query_index": query_index,
+        "num_queries": metrics["num_queries"],
         "mpi_total_time_sec": mpi_total_time_sec,
         "merge_time_sec": metrics["merge_time_sec"],
         "throughput_queries_per_sec": throughput_queries_per_sec,
@@ -287,6 +338,7 @@ def main() -> None:
 
     warmup_runs = benchmark_cfg.get("warmup_runs", 1)
     measurement_runs = benchmark_cfg.get("measurement_runs", 5)
+    query_policy = benchmark_cfg.get("query_policy", "fixed")
 
     similarity = search_cfg.get("similarity", "dot")
     if similarity != "dot":
@@ -307,6 +359,7 @@ def main() -> None:
         print(f"Search backend: {search_backend}")
         print(f"Warmup runs: {warmup_runs}")
         print(f"Measurement runs: {measurement_runs}")
+        print(f"Query policy: {query_policy}")
 
     load_start = MPI.Wtime()
 
@@ -342,6 +395,24 @@ def main() -> None:
         print(f"Queries: {queries.shape[0]}")
         print(f"Dimension: {queries.shape[1]}")
 
+    validate_query_policy(
+        query_policy=query_policy,
+        queries=queries,
+        warmup_runs=warmup_runs,
+        measurement_runs=measurement_runs,
+    )
+
+    query_pool_size = queries.shape[0]
+
+    if query_policy == "per_run":
+        queries_per_retrieval = 1
+    else:
+        queries_per_retrieval = queries.shape[0]
+
+    if rank == 0:
+        print(f"Query pool size: {query_pool_size}")
+        print(f"Queries per retrieval call: {queries_per_retrieval}")
+
     if rank == 0:
         print("Building reusable local search index on each rank.")
 
@@ -370,10 +441,19 @@ def main() -> None:
         if rank == 0:
             print(f"Warmup run {warmup_index + 1}/{warmup_runs}")
 
+        warmup_queries, warmup_query_index = select_queries_for_iteration(
+            queries=queries,
+            query_policy=query_policy,
+            iteration_index=warmup_index,
+        )
+
+        if rank == 0 and warmup_query_index is not None:
+            print(f"  using query index {warmup_query_index}")
+
         _ = run_selected_retrieval(
             mode=retrieval_mode,
             local_vectors=local_vectors,
-            queries=queries,
+            queries=warmup_queries,
             top_k=top_k,
             comm=comm,
             shard_start_idx=shard_start,
@@ -389,10 +469,19 @@ def main() -> None:
         if rank == 0:
             print(f"Measurement run {run_index + 1}/{measurement_runs}")
 
+        measurement_queries, measurement_query_index = select_queries_for_iteration(
+            queries=queries,
+            query_policy=query_policy,
+            iteration_index=warmup_runs + run_index,
+        )
+
+        if rank == 0 and measurement_query_index is not None:
+            print(f"  using query index {measurement_query_index}")
+
         result = run_selected_retrieval(
             mode=retrieval_mode,
             local_vectors=local_vectors,
-            queries=queries,
+            queries=measurement_queries,
             top_k=top_k,
             comm=comm,
             shard_start_idx=shard_start,
@@ -406,10 +495,17 @@ def main() -> None:
             compact_metrics = extract_compact_run_metrics(
                 run_index=run_index,
                 metrics=result["metrics"],
+                query_index=measurement_query_index,
             )
             measured_runs.append(compact_metrics)
 
     if rank == 0:
+        if gathered_load_info is None:
+            raise RuntimeError("gathered_load_info is None on rank 0")
+
+        if gathered_index_build_info is None:
+            raise RuntimeError("gathered_index_build_info is None on rank 0")
+
         load_times = [
             info["load_time_sec"]
             for info in gathered_load_info
@@ -457,10 +553,13 @@ def main() -> None:
             "faiss_num_threads": faiss_num_threads,
             "loading_strategy": "shard_aware_shared_npy",
             "vector_storage": "single_vectors_npy",
-            "query_loading": "full_queries_on_each_rank",
+            "query_loading": "full_query_pool_on_each_rank",
+            "query_policy": query_policy,
+            "query_pool_size": query_pool_size,
+            "queries_per_retrieval": queries_per_retrieval,
             "world_size": world_size,
             "num_vectors": num_global_vectors,
-            "num_queries": queries.shape[0],
+            "num_queries": queries_per_retrieval,
             "dimension": queries.shape[1],
             "top_k": top_k,
             "warmup_runs": warmup_runs,

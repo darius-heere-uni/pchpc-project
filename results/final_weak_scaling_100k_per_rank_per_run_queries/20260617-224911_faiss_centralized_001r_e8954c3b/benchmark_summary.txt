@@ -1,0 +1,58 @@
+Benchmark finished.
+
+Benchmark setup:
+  Run ID:             final_weak_scaling_100k_per_rank_per_run_queries
+  Retrieval mode:     mpi_centralized
+  Search backend:     faiss
+  MPI ranks:          1
+  Vectors:            100000
+  Queries:            1
+  Dimension:          2560
+  Top-k:              10
+  Warmup runs:        5
+  Measurement runs:   50
+  FAISS threads/rank: 1
+
+Initial loading:
+  Load time max:      0.792760 s
+  Load time mean:     0.792760 s
+
+Initial local index construction:
+  Index build max:    0.893801 s
+  Index build mean:   0.893801 s
+  Index reuse:        True
+
+Measured retrieval timings:
+  MPI retrieval time:
+    mean:   0.152529
+    median: 0.138170
+    min:    0.137774
+    max:    0.213088
+    std:    0.027544
+  Merge time:
+    mean:   0.000121
+    median: 0.000109
+    min:    0.000101
+    max:    0.000344
+    std:    0.000039
+  Max local search time:
+    mean:   0.152220
+    median: 0.137891
+    min:    0.137483
+    max:    0.212811
+    std:    0.027525
+  Max communication time:
+    mean:   0.000157
+    median: 0.000150
+    min:    0.000116
+    max:    0.000334
+    std:    0.000038
+  Throughput queries/sec:
+    mean:   6.725536
+    median: 7.237447
+    min:    4.692886
+    max:    7.258280
+    std:    0.958540
+
+Note:
+  In benchmark mode, the local search index is built once per rank and reused across warmup and measured retrieval runs.

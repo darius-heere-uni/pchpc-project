@@ -1,0 +1,58 @@
+Benchmark finished.
+
+Benchmark setup:
+  Run ID:             local_per_run_queries_tree
+  Retrieval mode:     mpi_tree
+  Search backend:     faiss
+  MPI ranks:          4
+  Vectors:            5000
+  Queries:            1
+  Dimension:          2560
+  Top-k:              10
+  Warmup runs:        5
+  Measurement runs:   50
+  FAISS threads/rank: 1
+
+Initial loading:
+  Load time max:      0.008341 s
+  Load time mean:     0.008330 s
+
+Initial local index construction:
+  Index build max:    0.040745 s
+  Index build mean:   0.040697 s
+  Index reuse:        True
+
+Measured retrieval timings:
+  MPI retrieval time:
+    mean:   0.001734
+    median: 0.001712
+    min:    0.001383
+    max:    0.002498
+    std:    0.000264
+  Merge time:
+    mean:   0.000197
+    median: 0.000189
+    min:    0.000126
+    max:    0.000385
+    std:    0.000060
+  Max local search time:
+    mean:   0.001511
+    median: 0.001490
+    min:    0.001193
+    max:    0.002141
+    std:    0.000223
+  Max communication time:
+    mean:   0.000099
+    median: 0.000094
+    min:    0.000050
+    max:    0.000198
+    std:    0.000039
+  Throughput queries/sec:
+    mean:   589.082670
+    median: 584.047486
+    min:    400.306475
+    max:    722.937730
+    std:    84.275552
+
+Note:
+  In benchmark mode, the local search index is built once per rank and reused across warmup and measured retrieval runs.
